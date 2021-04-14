@@ -9,7 +9,6 @@ import {
 } from "@reach/combobox";
 
 import "@reach/combobox/styles.css";
-//import "./styles.scss";
 
 function PlacesAutocomplete() {
   const {
@@ -47,10 +46,8 @@ function PlacesAutocomplete() {
 
   return (
     <div className="App">
-      <h1 className="title">USE-PLACES-AUTOCOMPLETE</h1>
-      <p className="subtitle">
-        React hook for Google Maps Places Autocomplete.
-      </p>
+      <h1 className="title">Weather</h1>
+      <p className="subtitle">Get the current weather and 5 day forecast</p>
       <Combobox onSelect={handleSelect} aria-labelledby="demo">
         <ComboboxInput
           style={{ width: 300, maxWidth: "90%" }}
