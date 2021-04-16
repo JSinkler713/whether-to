@@ -11,7 +11,7 @@ import {
 
 import "@reach/combobox/styles.css";
 
-function PlacesAutocomplete({ setParentCoords, setParentValue }) {
+function PlacesAutocomplete({ setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -74,6 +74,9 @@ function PlacesAutocomplete({ setParentCoords, setParentValue }) {
         />
         <ComboboxPopover>
           <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
+          Previous Searches
+          <ComboboxList>{previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}</ComboboxList>
+         
         </ComboboxPopover>
       </Combobox>
     </div>
