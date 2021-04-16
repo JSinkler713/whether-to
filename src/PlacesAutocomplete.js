@@ -11,7 +11,7 @@ import {
 
 import "@reach/combobox/styles.css";
 
-function PlacesAutocomplete({ setParentValue }) {
+function PlacesAutocomplete({ setParentCoords, setParentValue }) {
   const {
     ready,
     value,
@@ -35,6 +35,7 @@ function PlacesAutocomplete({ setParentValue }) {
     getGeocode({ address : val })
       .then((res)=> getLatLng(res[0]))
       .then(({ lat, lng }) => {
+        setParentCoords({ lat, lng })
         console.log("The coordinates are")
         console.log("Latitude: ", lat)
         console.log("Longitude: ", lng)
