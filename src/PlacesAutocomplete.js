@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
-import usePlacesAutocomplete from "use-places-autocomplete";
+import usePlacesAutocomplete, {
+  getLatLng, getGeocode } from "use-places-autocomplete";
 import {
   Combobox,
   ComboboxInput,
@@ -10,7 +11,7 @@ import {
 
 import "@reach/combobox/styles.css";
 
-function PlacesAutocomplete() {
+function PlacesAutocomplete({ setParentValue }) {
   const {
     ready,
     value,
@@ -20,10 +21,25 @@ function PlacesAutocomplete() {
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
+    setParentValue(e.target.value);
   };
 
   const handleSelect = (val: string): void => {
     setValue(val, false);
+    setParentValue(val, false);
+
+    console.log('***********************')
+    console.log(val)
+    console.log('***********************')
+    // assuming they just chose a location
+    getGeocode({ address : val })
+      .then((res)=> getLatLng(res[0]))
+      .then(({ lat, lng }) => {
+        console.log("The coordinates are")
+        console.log("Latitude: ", lat)
+        console.log("Longitude: ", lng)
+      })
+
   };
 
   const renderSuggestions = (): JSX.Element => {
