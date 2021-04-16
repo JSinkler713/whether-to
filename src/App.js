@@ -7,12 +7,15 @@ import fetchOneCall from './utils/fetchOneCall.js'
 function App() {
   const [value, setValue] = useState('')
   const [coords, setCoords] = useState({ lat:null, lng:null })
-  const [weather, setWeather] = useState('')
+  const [weather, setWeather] = useState({})
 
   useEffect(()=> {
-    //when lat and lng update call our OneCallApi
-    fetchOneCall(coords.lat, coords.lng)
-
+    // when lat and lng update call our OneCallApi
+    const getWeather = async()=> {
+      let data = await fetchOneCall(coords.lat, coords.lng)
+      setWeather(data)
+    }
+    getWeather()
   }, [coords])
 
   return (
