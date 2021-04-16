@@ -2,9 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import PlacesAutocomplete from './PlacesAutocomplete';
+import { geolocated } from 'react-geolocated';
 import fetchOneCall from './utils/fetchOneCall.js'
 
-function App() {
+function App(props) {
   const [value, setValue] = useState('')
   const [coords, setCoords] = useState({ lat:null, lng:null })
   const [weather, setWeather] = useState({})
@@ -12,6 +13,7 @@ function App() {
 
   useEffect(()=> {
     // on component load get the previous searches out of local storage
+
     setPreviousSearches( JSON.parse(localStorage.getItem('searches')) )
   }, [])
 
@@ -41,11 +43,26 @@ function App() {
     setPreviousSearches(updatedSearches)
   }, [coords])
 
+
+  const getMyWeather = async ()=> {
+      let data = await fetchOneCall(props.coords.latitude, props.coords.longitude)
+      setWeather(data)
+  }
   return (
     <div className="App">
       <PlacesAutocomplete setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+      {
+      props.coords && props.coords.latitude ?
+      <button onClick={getMyWeather}>Get My Weather</button>
+      :''
+      }
     </div>
   );
 }
-
-export default App;
+export default geolocated({
+    positionOptions: {
+        enableHighAccuracy: false,
+    },
+    userDecisionTimeout: 5000,
+})(App);
+// export default App;
