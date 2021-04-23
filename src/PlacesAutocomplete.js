@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import usePlacesAutocomplete, {
   getLatLng, getGeocode } from "use-places-autocomplete";
 import {
@@ -11,18 +11,24 @@ import {
 
 import "@reach/combobox/styles.css";
 
-function PlacesAutocomplete({ setParentCoords, setParentValue , previousSearches}) {
+function PlacesAutocomplete({ getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
     suggestions: { status, data },
     setValue
   } = usePlacesAutocomplete();
+  const [focused, setFocused] = useState(false)
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
     setParentValue(e.target.value);
   };
+
+  const handleFocus = (e)=> {
+    console.log('it is focused')
+    setFocused(true)
+  }
 
   const handleSelect = (val: string): void => {
     setValue(val, false);
@@ -65,20 +71,26 @@ function PlacesAutocomplete({ setParentCoords, setParentValue , previousSearches
     <div className="App">
       <h1 className="title">Weather</h1>
       <p className="subtitle">Get the current weather and 5 day forecast</p>
-      <Combobox onSelect={handleSelect} aria-labelledby="demo">
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <button onClick={()=> console.log('hey')}>Hey</button>
+      <Combobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
         <ComboboxInput
+          onFocus={handleFocus}
           style={{ width: 300, maxWidth: "90%" }}
           value={value}
           onChange={handleInput}
           disabled={!ready}
         />
-        <ComboboxPopover>
+        <ComboboxPopover >
+          <ComboboxList>
+            <ComboboxOption value="Use current location" />
+          </ComboboxList>
           <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
-          Previous Searches
-          <ComboboxList>{previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}</ComboboxList>
+          <ComboboxList>{!status &&  previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}</ComboboxList>
          
         </ComboboxPopover>
       </Combobox>
+      </div>
     </div>
   );
 }
