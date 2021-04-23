@@ -50,12 +50,7 @@ function App(props) {
   }
   return (
     <div className="App">
-      <PlacesAutocomplete setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
-      {
-      props.coords && props.coords.latitude ?
-      <button onClick={getMyWeather}>Get My Weather</button>
-      :''
-      }
+      <PlacesAutocomplete getMyWeather={getMyWeather} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
     </div>
   );
 }
