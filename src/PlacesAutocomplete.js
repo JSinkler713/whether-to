@@ -69,7 +69,9 @@ function PlacesAutocomplete({ getMyWeather, setParentCoords, setParentValue , pr
 
   return (
     <div className="App">
-      <h1 className="title">Weather</h1>
+      <div className='title-wrapper'>
+        <h1 className="title">Weather Report</h1>
+      </div>
       <p className="subtitle">Get the current weather and 5 day forecast</p>
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <button onClick={()=> console.log('hey')}>Hey</button>
