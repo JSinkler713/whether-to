@@ -8,10 +8,28 @@ import {
   ComboboxList,
   ComboboxOption
 } from "@reach/combobox";
-
+import styled from 'styled-components'
 import "@reach/combobox/styles.css";
 
-function PlacesAutocomplete({ getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+const InitialSearchWrapper = styled.div`
+padding-top: 50px;
+display: flex;
+flex-direction: column;
+align-items: center;
+`
+
+const StyledComboBoxInput = styled(ComboboxInput)`
+ border: ${({error}) => (error ? `2px solid red`: `1px solid black`)};
+`
+const TryAgainBox = styled.div`
+  display: ${({error})=> (error ? 'block' : 'none')};
+  color: white;
+  font-size: 14px;
+`
+
+
+
+function PlacesAutocomplete({ error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -68,7 +86,7 @@ function PlacesAutocomplete({ getWeather, getMyWeather, setParentCoords, setPare
   };
 
   return (
-    <div>
+    <InitialSearchWrapper>
       <div className='title-wrapper'>
         <h1 className="title">Weather Report</h1>
       </div>
@@ -76,13 +94,17 @@ function PlacesAutocomplete({ getWeather, getMyWeather, setParentCoords, setPare
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <button onClick={getWeather}>Get Weather</button>
       <Combobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
-        <ComboboxInput
+        <StyledComboBoxInput
+          error={error}
           onFocus={handleFocus}
           style={{ width: 300, maxWidth: "90%" }}
           value={value}
           onChange={handleInput}
           disabled={!ready}
         />
+        <TryAgainBox error={error}>
+          Please Enter a valid location or postal code.
+        </TryAgainBox>
         <ComboboxPopover >
           <ComboboxList>
             <ComboboxOption value="Use current location" />
@@ -93,7 +115,7 @@ function PlacesAutocomplete({ getWeather, getMyWeather, setParentCoords, setPare
         </ComboboxPopover>
       </Combobox>
       </div>
-    </div>
+    </InitialSearchWrapper>
   );
 }
 export default PlacesAutocomplete
