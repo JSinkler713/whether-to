@@ -14,6 +14,8 @@ const AppWrapper = styled.div`
 
 function App(props) {
   const [value, setValue] = useState('')
+  const [place, setPlace] = useState('')
+  const [error, setError] = useState(false)
   const [coords, setCoords] = useState({ lat:null, lng:null })
   const [weather, setWeather] = useState(null)
   const [previousSearches, setPreviousSearches] = useState([])
@@ -27,7 +29,18 @@ function App(props) {
     // when lat and lng update call our OneCallApi
   const getWeather = async()=> {
     let data = await fetchOneCall(coords.lat, coords.lng)
-    setWeather(data)
+    console.log(data, 'data returned it is not liking')
+    if (data === undefined) {
+      // do some error handling
+      setWeather(null)
+    } else if (data.cod == '400') {
+      setError(true)
+      setWeather(null)
+    } else {
+      setPlace(value)
+      setError(false)
+      setWeather(data)
+    }
   }
 
   useEffect(()=> {
@@ -54,9 +67,9 @@ function App(props) {
       setWeather(data)
   }
   return (
-    <AppWrapper icon={weather ? weather.current.weather[0].icon : ''} className="App">
-      <PlacesAutocomplete getMyWeather={getMyWeather} getWeather={getWeather} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
-      { weather ? <CurrentWeather weather={weather} /> : ''}
+    <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
+      <PlacesAutocomplete error={error} getMyWeather={getMyWeather} getWeather={getWeather} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+      { weather ? <CurrentWeather place={place} weather={weather} /> : ''}
     </AppWrapper>
   );
 }
