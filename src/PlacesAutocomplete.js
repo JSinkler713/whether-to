@@ -11,7 +11,7 @@ import {
 
 import "@reach/combobox/styles.css";
 
-function PlacesAutocomplete({ getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+function PlacesAutocomplete({ getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -68,13 +68,13 @@ function PlacesAutocomplete({ getMyWeather, setParentCoords, setParentValue , pr
   };
 
   return (
-    <div className="App">
+    <div>
       <div className='title-wrapper'>
         <h1 className="title">Weather Report</h1>
       </div>
       <p className="subtitle">Get the current weather and 5 day forecast</p>
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <button onClick={()=> console.log('hey')}>Hey</button>
+        <button onClick={getWeather}>Get Weather</button>
       <Combobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
         <ComboboxInput
           onFocus={handleFocus}
