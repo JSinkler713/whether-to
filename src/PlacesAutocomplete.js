@@ -20,6 +20,7 @@ align-items: center;
 
 const StyledComboBoxInput = styled(ComboboxInput)`
  border: ${({error}) => (error ? `2px solid red`: `1px solid black`)};
+ background: ${({error}) => (error ? `#FFD3D3`: '#FFFFFF')};
 `
 const TryAgainBox = styled.div`
   display: ${({error})=> (error ? 'block' : 'none')};
