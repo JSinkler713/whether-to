@@ -22,7 +22,6 @@ function App(props) {
 
   useEffect(()=> {
     // on component load get the previous searches out of local storage
-
     setPreviousSearches( JSON.parse(localStorage.getItem('searches')) )
   }, [])
 
@@ -45,6 +44,8 @@ function App(props) {
 
   useEffect(()=> {
     // when a user enters a search save it to lacalstorage
+    console.log('the use effect with depend on coords is running')
+    setWeather(null)
     let searches = localStorage.getItem('searches')
     searches = JSON.parse(searches)
     if (searches && searches.length > 0) {
@@ -74,9 +75,13 @@ function App(props) {
     setPlace(value)
   }, [getMyWeather])
 
+  const clearWeather = ()=> {
+    setWeather(null)
+  }
+
   return (
     <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
-      <PlacesAutocomplete error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+      <PlacesAutocomplete clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
       { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
     </AppWrapper>
   );

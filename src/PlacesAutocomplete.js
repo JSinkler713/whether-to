@@ -33,7 +33,7 @@ const TryAgainBox = styled.div`
 
 
 
-function PlacesAutocomplete({ coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -44,7 +44,7 @@ function PlacesAutocomplete({ coords, error, getWeather, getMyWeather, setParent
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
-    setParentValue(e.target.value);
+    setParentValue(value)
   };
 
   const handleFocus = (e)=> {
@@ -70,6 +70,10 @@ function PlacesAutocomplete({ coords, error, getWeather, getMyWeather, setParent
     } else {
       console.log('no coords yet')
     }
+  }
+
+  const handleSubmit = ()=> {
+    setParentValue( value, false )
   }
 
   const handleSelect = (val: string): void => {
