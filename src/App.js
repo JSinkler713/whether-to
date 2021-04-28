@@ -63,13 +63,21 @@ function App(props) {
 
   const getMyWeather = async ()=> {
       // this is to use current location from Geolocated App
+      console.log('getting my own weather ', 'coords are', props.coords.latitude, props.coords.longitude)
       let data = await fetchOneCall(props.coords.latitude, props.coords.longitude)
+      setPlace(value)
       setWeather(data)
   }
+
+  useEffect(()=> {
+    // if value changes, then so should place
+    setPlace(value)
+  }, [getMyWeather])
+
   return (
     <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
-      <PlacesAutocomplete error={error} getMyWeather={getMyWeather} getWeather={getWeather} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
-      { weather ? <CurrentWeather place={place} weather={weather} /> : ''}
+      <PlacesAutocomplete error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+      { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
     </AppWrapper>
   );
 }
