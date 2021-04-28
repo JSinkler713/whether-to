@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import usePlacesAutocomplete, {
   getLatLng, getGeocode } from "use-places-autocomplete";
+// trying this out
+// import CurrentLocation from 'react-current-location-address'
 import {
   Combobox,
   ComboboxInput,
@@ -10,6 +12,7 @@ import {
 } from "@reach/combobox";
 import styled from 'styled-components'
 import "@reach/combobox/styles.css";
+const API_KEY = process.env.REACT_APP_LAT_LNG_API
 
 const InitialSearchWrapper = styled.div`
 padding-top: 50px;
@@ -30,7 +33,7 @@ const TryAgainBox = styled.div`
 
 
 
-function PlacesAutocomplete({ error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+function PlacesAutocomplete({ coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -49,23 +52,46 @@ function PlacesAutocomplete({ error, getWeather, getMyWeather, setParentCoords, 
     setFocused(true)
   }
 
+  const handleCurrentLocation = async(e)=> {
+    // choosing use current location
+    console.log('handle current location')
+    if (coords) {
+      let res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&key=${API_KEY}`)
+      res = await res.json()
+      let place = res.results[0].formatted_address.split(',')
+      let city = place[1].trim()
+      let stateAndZip = place[2].trim()
+      let country = place[3].trim()
+      let myValue = `${city}, ${stateAndZip}, ${country}`
+      console.log(city, stateAndZip, country)
+      setParentValue( myValue )
+      console.log(res)
+      getMyWeather()
+    } else {
+      console.log('no coords yet')
+    }
+  }
+
   const handleSelect = (val: string): void => {
-    setValue(val, false);
-    setParentValue(val, false);
+    if (val !== 'Use current location') {
+      setValue(val, false);
+      setParentValue(val, false);
 
-    console.log('***********************')
-    console.log(val)
-    console.log('***********************')
-    // assuming they just chose a location
-    getGeocode({ address : val })
-      .then((res)=> getLatLng(res[0]))
-      .then(({ lat, lng }) => {
-        setParentCoords({ lat, lng })
-        console.log("The coordinates are")
-        console.log("Latitude: ", lat)
-        console.log("Longitude: ", lng)
-      })
-
+      console.log('***********************')
+      console.log(val)
+      console.log('***********************')
+      // assuming they just chose a location
+      getGeocode({ address : val })
+        .then((res)=> getLatLng(res[0]))
+        .then(({ lat, lng }) => {
+          setParentCoords({ lat, lng })
+          console.log("The coordinates are")
+          console.log("Latitude: ", lat)
+          console.log("Longitude: ", lng)
+        })
+    } else {
+      handleCurrentLocation()
+    }
   };
 
   const renderSuggestions = (): JSX.Element => {
@@ -108,7 +134,7 @@ function PlacesAutocomplete({ error, getWeather, getMyWeather, setParentCoords, 
         </TryAgainBox>
         <ComboboxPopover >
           <ComboboxList>
-            <ComboboxOption value="Use current location" />
+            <ComboboxOption  value="Use current location" />
           </ComboboxList>
           <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
           <ComboboxList>{!status &&  previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}</ComboboxList>
