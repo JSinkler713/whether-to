@@ -11,6 +11,7 @@ import {
   ComboboxOption
 } from "@reach/combobox";
 import {ReactComponent as Search} from './assets/search.svg'
+import {ReactComponent as Close} from './assets/close.svg'
 import styled from 'styled-components'
 import "@reach/combobox/styles.css";
 const API_KEY = process.env.REACT_APP_LAT_LNG_API
@@ -25,6 +26,16 @@ const StyledSearchSVG = styled(Search)`
   path {
     fill: white;
   }
+`
+const StyledClose = styled(Close)`
+  path {
+    fill: grey;
+  }
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
 `
 const StyledComboBoxInput = styled(ComboboxInput)`
   width: 100%;
@@ -69,6 +80,9 @@ function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeath
   const handleFocus = (e)=> {
     console.log('it is focused')
     setFocused(true)
+  }
+  const handleClear = (e)=> {
+    setValue('')
   }
 
   const handleCurrentLocation = async(e)=> {
@@ -142,7 +156,8 @@ function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeath
       </div>
       <p className="subtitle">Get the current weather and 5 day forecast</p>
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <div style={{display: 'flex'}}>
+        <div style={{display: 'flex', position: 'relative'}}>
+          <StyledClose onClick={handleClear}/>
           <SearchButtonWrapper onClick={getWeather}>
               <StyledSearchSVG />
           </SearchButtonWrapper>
