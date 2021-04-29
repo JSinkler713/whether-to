@@ -5,6 +5,8 @@ import styled from 'styled-components'
 const IconWrapper = styled.div`
 min-width: 60px;
 margin: 0 20px;
+display: flex;
+align-items: center;
 
 `
 
