@@ -10,6 +10,7 @@ import {
   ComboboxList,
   ComboboxOption
 } from "@reach/combobox";
+import {ReactComponent as Search} from './assets/search.svg'
 import styled from 'styled-components'
 import "@reach/combobox/styles.css";
 const API_KEY = process.env.REACT_APP_LAT_LNG_API
@@ -20,15 +21,26 @@ display: flex;
 flex-direction: column;
 align-items: center;
 `
-
+const StyledSearchSVG = styled(Search)`
+  path {
+    fill: white;
+  }
+`
 const StyledComboBoxInput = styled(ComboboxInput)`
  border: ${({error}) => (error ? `2px solid red`: `1px solid black`)};
  background: ${({error}) => (error ? `#FFD3D3`: '#FFFFFF')};
+`
+const StyledCombobox = styled(Combobox)`
+  display: flex;
+  justify-content: start;
 `
 const TryAgainBox = styled.div`
   display: ${({error})=> (error ? 'block' : 'none')};
   color: white;
   font-size: 14px;
+`
+const SearchButtonWrapper = styled.div`
+border-radius: 50%;
 `
 
 
@@ -123,28 +135,32 @@ function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeath
       </div>
       <p className="subtitle">Get the current weather and 5 day forecast</p>
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <button onClick={getWeather}>Get Weather</button>
-      <Combobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
-        <StyledComboBoxInput
-          error={error}
-          onFocus={handleFocus}
-          style={{ width: 300, maxWidth: "90%" }}
-          value={value}
-          onChange={handleInput}
-          disabled={!ready}
-        />
-        <TryAgainBox error={error}>
-          Please Enter a valid location or postal code.
-        </TryAgainBox>
-        <ComboboxPopover >
-          <ComboboxList>
-            <ComboboxOption  value="Use current location" />
-          </ComboboxList>
-          <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
-          <ComboboxList>{!status &&  previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}</ComboboxList>
+        <div style={{display: 'flex'}}>
+          <SearchButtonWrapper onClick={getWeather}>
+            <span><StyledSearchSVG /></span>
+          </SearchButtonWrapper>
+          <StyledCombobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
+          <StyledComboBoxInput
+            error={error}
+            onFocus={handleFocus}
+            style={{ width: 300, maxWidth: "90%" }}
+            value={value}
+            onChange={handleInput}
+            disabled={!ready}
+          />
+          <TryAgainBox error={error}>
+            Please Enter a valid location or postal code.
+          </TryAgainBox>
+          <ComboboxPopover >
+            <ComboboxList>
+              <ComboboxOption  value="Use current location" />
+            </ComboboxList>
+            <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
+            <ComboboxList>{!status &&  previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}</ComboboxList>
          
-        </ComboboxPopover>
-      </Combobox>
+          </ComboboxPopover>
+        </StyledCombobox>
+        </div>
       </div>
     </InitialSearchWrapper>
   );
