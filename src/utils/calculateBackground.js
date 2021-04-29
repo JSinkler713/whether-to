@@ -14,6 +14,8 @@ const calculateBackground = (icon)=> {
         '10d': `linear-gradient(180deg, #50727E 0%, #BDCED8 100%)`,
         '13d': `linear-gradient(180deg, #50727E 0%, #BDCED8 100%)`,
         '9d': `linear-gradient(180deg, #50727E 0%, #BDCED8 100%)`,
+        // mist same as rain for now
+        '50d': `linear-gradient(180deg, #50727E 0%, #BDCED8 100%)`,
     }
     // if not in the table
     if (!table[icon]) {

@@ -17,6 +17,8 @@ const calculateIcon = (icon)=> {
     '09n': rain,
     '10d': rain,
     '10n': rain,
+    '50d': rain,
+    '50n': rain,
     '11d': thunder,
     '11n': thunder,
     '13d': thunder,
