@@ -10,6 +10,7 @@ import calculateTime from './utils/calculateTime'
 
 const CurrentWeatherWrapper = styled.div`
  height: 100%;
+ padding: 10px;
  width: 100%;
  icon: icon;
 `

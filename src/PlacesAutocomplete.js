@@ -16,10 +16,10 @@ import "@reach/combobox/styles.css";
 const API_KEY = process.env.REACT_APP_LAT_LNG_API
 
 const InitialSearchWrapper = styled.div`
-padding-top: 50px;
-display: flex;
-flex-direction: column;
-align-items: center;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 const StyledSearchSVG = styled(Search)`
   path {
@@ -27,8 +27,13 @@ const StyledSearchSVG = styled(Search)`
   }
 `
 const StyledComboBoxInput = styled(ComboboxInput)`
- border: ${({error}) => (error ? `2px solid red`: `1px solid black`)};
- background: ${({error}) => (error ? `#FFD3D3`: '#FFFFFF')};
+  width: 100%;
+  min-width: 200px;
+  min-height: 24px;
+  border-radius: 18px;
+  padding: 5px;
+  border: ${({error}) => (error ? `2px solid red`: `1px solid black`)};
+  background: ${({error}) => (error ? `#FFD3D3`: '#FFFFFF')};
 `
 const StyledCombobox = styled(Combobox)`
   display: flex;
@@ -40,7 +45,9 @@ const TryAgainBox = styled.div`
   font-size: 14px;
 `
 const SearchButtonWrapper = styled.div`
-border-radius: 50%;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
 `
 
 
@@ -137,13 +144,12 @@ function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeath
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <div style={{display: 'flex'}}>
           <SearchButtonWrapper onClick={getWeather}>
-            <span><StyledSearchSVG /></span>
+              <StyledSearchSVG />
           </SearchButtonWrapper>
           <StyledCombobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
           <StyledComboBoxInput
             error={error}
             onFocus={handleFocus}
-            style={{ width: 300, maxWidth: "90%" }}
             value={value}
             onChange={handleInput}
             disabled={!ready}
