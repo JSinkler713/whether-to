@@ -5,6 +5,7 @@ import PlacesAutocomplete from './PlacesAutocomplete';
 import { geolocated } from 'react-geolocated';
 import fetchOneCall from './utils/fetchOneCall.js'
 import CurrentWeather from './CurrentWeather';
+import ForecastDays from './ForecastDays';
 import styled from 'styled-components';
 import calculateBackground from './utils/calculateBackground';
 
@@ -18,6 +19,7 @@ function App(props) {
   const [error, setError] = useState(false)
   const [coords, setCoords] = useState({ lat:null, lng:null })
   const [weather, setWeather] = useState(null)
+  const [forecasts, setForecasts] = useState([])
   const [previousSearches, setPreviousSearches] = useState([])
 
   useEffect(()=> {
@@ -79,10 +81,23 @@ function App(props) {
     setWeather(null)
   }
 
+  useEffect(()=> {
+    //if weather updates, then update forecasts
+    if (weather) {
+      let days =[]
+      weather.daily.forEach((day, i)=> {
+        days.push(day.weather[0].icon)
+      })
+      console.log(days)
+      setForecasts(days)
+    }
+  }, [weather])
+
   return (
     <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
       <PlacesAutocomplete clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
       { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
+      { weather && value && forecasts.length ? <ForecastDays days={forecasts}  /> : ''}
     </AppWrapper>
   );
 }
