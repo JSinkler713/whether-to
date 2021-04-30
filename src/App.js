@@ -12,6 +12,24 @@ import calculateBackground from './utils/calculateBackground';
 const AppWrapper = styled.div`
  background: ${({icon})=> calculateBackground(icon)};
 `
+const SmallHeaderSearch = styled.header`
+display: flex;
+align-items:center;
+padding: 0px 10px;
+height: 48px;
+width: 100%;
+
+`
+const TitleWrapper = styled.div`
+width: 100px
+text-align: center;
+`
+const SmallTitle = styled.h1`
+  font-family: 'Staatliches', cursive;
+  color: white;
+  font-size: 14px;
+  line-height: 90.5%;
+`
 
 function App(props) {
   const [value, setValue] = useState('')
@@ -111,7 +129,16 @@ function App(props) {
 
   return (
     <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
+      { !(weather && value) ? (
       <PlacesAutocomplete myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+      ): (
+      <SmallHeaderSearch>
+        <TitleWrapper style={{display: 'flex', flexDirection: 'column'}}>
+          <SmallTitle>Weather</SmallTitle><SmallTitle>Report</SmallTitle>
+        </TitleWrapper>
+      </SmallHeaderSearch>
+
+      )}
       { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
       { weather && value && forecasts.length ? <ForecastDays days={forecasts}  /> : ''}
     </AppWrapper>
