@@ -145,7 +145,24 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
   }
 
   const handleSubmit = ()=> {
-    setParentValue( value, false )
+    console.log('in the submit')
+    console.log('going to try getGeocode')
+    getGeocode({ address : value })
+      .then((res)=>{
+        console.log('the first response, does it have address for zip?')
+        console.log(res)
+        console.log(res[0].formatted_address)
+        setValue('')
+        setParentValue(res[0].formatted_address)
+        return getLatLng(res[0])
+      })
+      .then(({ lat, lng }) => {
+        setParentCoords({ lat, lng })
+        getWeather(lat,lng)
+        console.log('this is what i got')
+        console.log('lat and long', lat, lng)
+      })
+    //setParentValue( value, false )
   }
 
   const handleSelect = (val: string): void => {
@@ -164,6 +181,8 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
           console.log("The coordinates are")
           console.log("Latitude: ", lat)
           console.log("Longitude: ", lng)
+          getWeather(lat,lng)
+          setValue('')
         })
     } else {
       handleCurrentLocation()
@@ -197,7 +216,8 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <div style={{display: 'flex', position: 'relative'}}>
           <StyledClose onClick={handleClear}/>
-          <SearchButtonWrapper onClick={getWeather}>
+          {/*<SearchButtonWrapper onClick={getWeather}>*/}
+          <SearchButtonWrapper onClick={handleSubmit}>
               <StyledSearchSVG />
           </SearchButtonWrapper>
           <StyledCombobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
@@ -220,7 +240,7 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
             <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
             
             <ComboboxList>
-              {!status ?
+              {!status && previousSearches.length?
                 (
               <RecentSearchesLabelContainer>
                 <RecentLocationLabelWrapper>
