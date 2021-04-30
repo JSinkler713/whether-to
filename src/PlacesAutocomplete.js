@@ -94,14 +94,14 @@ const Clear = styled.span`
   margin: auto;
   font-size: 13px;
   top: 3px;
+  cursor: pointer;
   right: 5px;
   font-weight: 400;
 `
 
 
 
-
-function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -220,11 +220,15 @@ function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeath
             <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
             
             <ComboboxList>
+              {!status ?
+                (
               <RecentSearchesLabelContainer>
                 <RecentLocationLabelWrapper>
-                  <RecentLocationLabel>Recent Searches</RecentLocationLabel><Clear>Clear</Clear>
+                  <RecentLocationLabel>Recent Searches</RecentLocationLabel><Clear onClick={clearSearchHistory}>Clear</Clear>
                 </RecentLocationLabelWrapper>
               </RecentSearchesLabelContainer>
+                ) : ''
+              }
               {!status && previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}
 
             </ComboboxList>
