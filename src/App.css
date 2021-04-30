@@ -24,7 +24,6 @@ img {
 .App {
   text-align: center;
   background: linear-gradient(180deg, #217CC0 0%, #74CCF2 85.5%);
-  min-height: 100vh;
   font-family: 'Staatliches', cursive;
   color: white;
   word-break: break-all;

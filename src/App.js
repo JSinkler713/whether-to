@@ -11,6 +11,8 @@ import calculateBackground from './utils/calculateBackground';
 
 const AppWrapper = styled.div`
  background: ${({icon})=> calculateBackground(icon)};
+ height: 100vh;
+ height: {otherHeight};
 `
 const SmallHeaderSearch = styled.header`
 display: flex;
@@ -33,6 +35,7 @@ const SmallTitle = styled.h1`
 
 function App(props) {
   const [value, setValue] = useState('')
+  const [otherHeight, setOtherHeight] = useState()
   const [place, setPlace] = useState('')
   const [error, setError] = useState(false)
   const [myCoords, setMyCoords] = useState({ lat:null, lng:null })
@@ -41,6 +44,9 @@ function App(props) {
   const [forecasts, setForecasts] = useState([])
   const [previousSearches, setPreviousSearches] = useState([])
 
+  useEffect(()=> {
+    setOtherHeight(window.innerHeight)
+  }, [])
   useEffect(()=> {
     // on component load get the previous searches out of local storage
     setPreviousSearches( JSON.parse(localStorage.getItem('searches')) )
@@ -128,7 +134,7 @@ function App(props) {
   }, [weather])
 
   return (
-    <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
+    <AppWrapper otherHeight={otherHeight} icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
       { !(weather && value) ? (
       <PlacesAutocomplete myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
       ): (
