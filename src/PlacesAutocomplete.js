@@ -98,6 +98,7 @@ function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeath
       let myValue = `${city}, ${stateAndZip}, ${country}`
       console.log(city, stateAndZip, country)
       setParentValue( myValue )
+      setValue('')
       console.log(res)
       getMyWeather()
     } else {
