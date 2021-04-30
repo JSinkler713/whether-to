@@ -42,6 +42,9 @@ const StyledComboBoxInput = styled(ComboboxInput)`
   width: 100%;
   min-width: 200px;
   min-height: 24px;
+  /*Does this stop auto phone zoom? */
+  /* YES! */
+  font-size: 16px;
   border-radius: 18px;
   padding: 5px;
   border: ${({error}) => (error ? `2px solid red`: `1px solid black`)};
