@@ -12,6 +12,7 @@ import {
 } from "@reach/combobox";
 import {ReactComponent as Search} from './assets/search.svg'
 import {ReactComponent as Close} from './assets/close.svg'
+import {ReactComponent as GPS} from './assets/gps.svg'
 import styled from 'styled-components'
 import "@reach/combobox/styles.css";
 const API_KEY = process.env.REACT_APP_LAT_LNG_API
@@ -50,6 +51,9 @@ const StyledCombobox = styled(Combobox)`
   display: flex;
   justify-content: start;
 `
+const StyledGPS = styled(GPS)`
+  margin-right: 4px;
+`
 const TryAgainBox = styled.div`
   display: ${({error})=> (error ? 'block' : 'none')};
   color: white;
@@ -60,6 +64,40 @@ const SearchButtonWrapper = styled.div`
   align-items: center;
   border-radius: 50%;
 `
+const CurrentLocationBox = styled(ComboboxOption)`
+  border-bottom: 2px solid black;
+  margin: 0px 3px;
+  display: flex;
+  align-items: center;
+`
+const RecentSearchesLabelContainer = styled.li`
+  text-decoration: none;
+  height: 24px;
+`
+const RecentLocationLabelWrapper = styled.div`
+  position: relative;
+  height: 100%
+  `
+const RecentLocationLabel = styled.span`
+  position: absolute;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  top: 4px;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size:14px;
+  left: 5px;
+  font-weight: 800;
+`
+const Clear = styled.span`
+  position: absolute;
+  margin: auto;
+  font-size: 13px;
+  top: 3px;
+  right: 5px;
+  font-weight: 400;
+`
+
 
 
 
@@ -175,10 +213,21 @@ function PlacesAutocomplete({clearWeather, coords, error, getWeather, getMyWeath
           </TryAgainBox>
           <ComboboxPopover >
             <ComboboxList>
-              <ComboboxOption  value="Use current location" />
+                <CurrentLocationBox value="Use current location">
+                  <StyledGPS /> Use current location
+                </CurrentLocationBox>
             </ComboboxList>
             <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
-            <ComboboxList>{!status &&  previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}</ComboboxList>
+            
+            <ComboboxList>
+              <RecentSearchesLabelContainer>
+                <RecentLocationLabelWrapper>
+                  <RecentLocationLabel>Recent Searches</RecentLocationLabel><Clear>Clear</Clear>
+                </RecentLocationLabelWrapper>
+              </RecentSearchesLabelContainer>
+              {!status && previousSearches.map((item, key)=> <ComboboxOption value={item} /> )}
+
+            </ComboboxList>
          
           </ComboboxPopover>
         </StyledCombobox>
