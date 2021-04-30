@@ -7,6 +7,7 @@ display: flex;
 flex-direction: row;
 overflow-x: auto;
 width: 100%;
+min-height: 120px; //little more space
 padding: 10px 0px;
 `
  

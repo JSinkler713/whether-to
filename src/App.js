@@ -22,8 +22,7 @@ width: 100%;
 
 `
 const TitleWrapper = styled.div`
-width: 100px
-text-align: center;
+  text-align: center;
 `
 const SmallTitle = styled.h1`
   font-family: 'Staatliches', cursive;
