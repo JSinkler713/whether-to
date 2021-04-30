@@ -7,7 +7,7 @@ display: flex;
 flex-direction: row;
 overflow-x: auto;
 width: 100%;
-padding-top: 50px;
+padding: 10px 0px;
 `
  
 const ForecastDays = (props)=> { 

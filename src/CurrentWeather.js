@@ -13,6 +13,14 @@ const CurrentWeatherWrapper = styled.div`
   padding: 10px;
   width: 100%;
   icon: icon;
+  flex-grow: 1;
+`
+const CurrentWeatherBlock = styled.div`
+  display: flex;
+  flex-grow:1;
+  flex-direction: column;
+  height: 100%;
+
 `
 
 const NameTimeBlock = styled.div`
@@ -30,6 +38,7 @@ const NameTimeWrapper = styled.div`
   grid-template-columns: 1fr;
 `
 const CityName = styled.p`
+  word-break: break-word;
   text-align: left;
   font-family: Source Sans Pro, sans-serif;
   font-style: normal;
@@ -56,6 +65,16 @@ const Time = styled.p`
 const IconWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
+  flex-grow:1;
+  padding-top: 10px;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+`
+const IconImage = styled.img`
+  min-width: 50%;
+  width: 30%;
+  /* will get large at big screen sizes */
 `
 
 const TempMainBlock = styled.div`
@@ -132,7 +151,7 @@ const CurrentWeather = ({weather, place})=> {
     return ( 
         <CurrentWeatherWrapper icon={weather.current.weather[0].icon}>
         { weather.current ? (
-        <div>
+        <CurrentWeatherBlock>
 
           <NameTimeBlock>
             <NameTimeWrapper>
@@ -142,7 +161,7 @@ const CurrentWeather = ({weather, place})=> {
           </NameTimeBlock>
 
           <IconWrapper>
-            <img src={calculateIcon(icon)} />
+            <IconImage src={calculateIcon(icon)} />
           </IconWrapper>
 
           <TempMainBlock>
@@ -168,7 +187,7 @@ const CurrentWeather = ({weather, place})=> {
               </StatProperties>
             </InfoWrapper>
           </InfoBlock>
-        </div>)
+        </CurrentWeatherBlock>)
         :
         <>
         ''
