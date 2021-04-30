@@ -17,6 +17,7 @@ function App(props) {
   const [value, setValue] = useState('')
   const [place, setPlace] = useState('')
   const [error, setError] = useState(false)
+  const [myCoords, setMyCoords] = useState({ lat:null, lng:null })
   const [coords, setCoords] = useState({ lat:null, lng:null })
   const [weather, setWeather] = useState(null)
   const [forecasts, setForecasts] = useState([])
@@ -86,6 +87,15 @@ function App(props) {
   const clearWeather = ()=> {
     setWeather(null)
   }
+  useEffect(()=> {
+    if (props.coords) {
+    // these can change to other locations
+    setCoords({ lat: props.coords.latitude, lng: props.coords.longitude})
+
+    // this is always my own
+    setMyCoords({ lat:props.coords.latitude, lng: props.coords.longitude})
+    }
+  },[props.coords])
 
   useEffect(()=> {
     //if weather updates, then update forecasts
@@ -101,7 +111,7 @@ function App(props) {
 
   return (
     <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
-      <PlacesAutocomplete clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+      <PlacesAutocomplete myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
       { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
       { weather && value && forecasts.length ? <ForecastDays days={forecasts}  /> : ''}
     </AppWrapper>

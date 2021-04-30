@@ -101,7 +101,7 @@ const Clear = styled.span`
 
 
 
-function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -138,7 +138,7 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
       setParentValue( myValue )
       setValue('')
       console.log(res)
-      getMyWeather()
+      getWeather(myCoords.lat, myCoords.lng)//default uses coords
     } else {
       console.log('no coords yet')
     }
@@ -167,7 +167,6 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
 
   const handleSelect = (val: string): void => {
     if (val !== 'Use current location') {
-      setValue(val, false);
       setParentValue(val, false);
 
       console.log('***********************')
@@ -216,7 +215,6 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <div style={{display: 'flex', position: 'relative'}}>
           <StyledClose onClick={handleClear}/>
-          {/*<SearchButtonWrapper onClick={getWeather}>*/}
           <SearchButtonWrapper onClick={handleSubmit}>
               <StyledSearchSVG />
           </SearchButtonWrapper>
@@ -233,14 +231,18 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, coords, error, ge
           </TryAgainBox>
           <ComboboxPopover >
             <ComboboxList>
-                <CurrentLocationBox value="Use current location">
+              { coords ?
+                  (
+                <CurrentLocationBox  onClick={handleCurrentLocation} value="Use current location">
                   <StyledGPS /> Use current location
                 </CurrentLocationBox>
+                  ): ''
+              }
             </ComboboxList>
             <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
             
             <ComboboxList>
-              {!status && previousSearches.length?
+              {!status && previousSearches.length > 1?
                 (
               <RecentSearchesLabelContainer>
                 <RecentLocationLabelWrapper>
