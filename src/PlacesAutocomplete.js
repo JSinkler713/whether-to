@@ -144,7 +144,8 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
     }
   }
 
-  const handleSubmit = ()=> {
+  const handleSubmit = (e)=> {
+    e.preventDefault()
     console.log('in the submit')
     console.log('going to try getGeocode')
     getGeocode({ address : value })
@@ -213,7 +214,7 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
       </div>
       <p className="subtitle">Get the current weather and 5 day forecast</p>
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <div style={{display: 'flex', position: 'relative'}}>
+        <form onSubmit={handleSubmit} style={{display: 'flex', position: 'relative'}}>
           <StyledClose onClick={handleClear}/>
           <SearchButtonWrapper onClick={handleSubmit}>
               <StyledSearchSVG />
@@ -233,7 +234,7 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
             <ComboboxList>
               { coords ?
                   (
-                <CurrentLocationBox  onClick={handleCurrentLocation} value="Use current location">
+                <CurrentLocationBox onClick={handleCurrentLocation} value="Use current location">
                   <StyledGPS /> Use current location
                 </CurrentLocationBox>
                   ): ''
@@ -257,7 +258,7 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
          
           </ComboboxPopover>
         </StyledCombobox>
-        </div>
+        </form>
       </div>
     </InitialSearchWrapper>
   );
