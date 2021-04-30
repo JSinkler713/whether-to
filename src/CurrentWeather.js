@@ -14,10 +14,7 @@ const CurrentWeatherWrapper = styled.div`
   width: 100%;
   icon: icon;
 `
-const IconWrapper = styled.div`
-  width: 100%;
-  margin: 0 auto;
-`
+
 const NameTimeBlock = styled.div`
   display: flex;
   justify-content: flex;
@@ -53,6 +50,41 @@ const Time = styled.p`
   /* identical to box height */
   color: #636363;
   opacity: 0.9;
+`
+
+
+const IconWrapper = styled.div`
+  width: 100%;
+  margin: 0 auto;
+`
+
+const TempMainBlock = styled.div`
+  display: flex;
+  margin: 5px 26px;
+`
+const Temp = styled.p`
+  font-family: Source Sans Pro, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 80px;
+  text-align: center;
+  color: #FFFFFF;
+`
+const Degree = styled.sup`
+ font-size: 36px;
+
+`
+const MainWeather = styled.p`
+  align-self: flex-end;
+  margin-bottom: 10px;
+  font-family: Source Sans Pro, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.03em;
+  color: #FFFFFF;
 `
 
 const InfoBlock = styled.div`
@@ -108,30 +140,33 @@ const CurrentWeather = ({weather, place})=> {
             <Time>{calculateTime(weather.current.dt, weather.timezone_offset)}</Time>
             </NameTimeWrapper>
           </NameTimeBlock>
+
           <IconWrapper>
             <img src={calculateIcon(icon)} />
           </IconWrapper>
-          {/*
-            <p>{weather.current.weather[0].main}</p>
-            <p>{Math.floor(weather.current.temp)} F</p>
-            */}
+
+          <TempMainBlock>
+            <Temp>{Math.floor(weather.current.temp)}<Degree>&#8457;</Degree></Temp>
+            <MainWeather>{weather.current.weather[0].main}</MainWeather>
+          </TempMainBlock>
+
           <InfoBlock>
-          <InfoWrapper>
-            <StatNames>
-            <p>Precipitation</p>
-            <p>Humidity</p>
-            <p>UV Index</p>
-            <p>Wind</p>
-            </StatNames>
-            <StatProperties>
-            <p>{weather.minutely ? weather.minutely[0].precipitation * 100 : weather.hourly[0].pop * 100}%</p>
-            <p>{weather.current.humidity}%</p>
-            <p>{Math.floor(weather.current.uvi)} of 10</p>
-            <p>{Math.round(weather.current.wind_speed)} mph</p>
+            <InfoWrapper>
+              <StatNames>
+              <p>Precipitation</p>
+              <p>Humidity</p>
+              <p>UV Index</p>
+              <p>Wind</p>
+              </StatNames>
+              <StatProperties>
+              <p>{weather.minutely ? weather.minutely[0].precipitation * 100 : weather.hourly[0].pop * 100}%</p>
+              <p>{weather.current.humidity}%</p>
+              <p>{Math.floor(weather.current.uvi)} of 10</p>
+              <p>{Math.round(weather.current.wind_speed)} mph</p>
 
 
-            </StatProperties>
-          </InfoWrapper>
+              </StatProperties>
+            </InfoWrapper>
           </InfoBlock>
         </div>)
         :
