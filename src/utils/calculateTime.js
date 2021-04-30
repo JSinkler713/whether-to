@@ -12,6 +12,12 @@ const calculateTime = (dt, offset) => {
         hour = hour % 12
         midnightMarker = 'pm'
     } else {
+        if (hour === '00') {
+          hour = 12
+        }
+        if (hour[0] === '0') {
+          hour = hour[1]
+        }
         midnightMarker = 'am'
     }
     let string =`as of ${hour}:${minutes} ${midnightMarker}`
