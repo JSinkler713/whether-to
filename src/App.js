@@ -28,8 +28,8 @@ function App(props) {
   }, [])
 
     // when lat and lng update call our OneCallApi
-  const getWeather = async()=> {
-    let data = await fetchOneCall(coords.lat, coords.lng)
+  const getWeather = async(lat=coords.lat, lng=coords.lng)=> {
+    let data = await fetchOneCall(lat, lng)
     console.log(data, 'data returned it is not liking')
     if (data === undefined) {
       // do some error handling
