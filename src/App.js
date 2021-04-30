@@ -49,18 +49,19 @@ function App(props) {
     console.log('the use effect with depend on coords is running')
     setWeather(null)
     let searches = localStorage.getItem('searches')
+    let updatedsearches
     searches = JSON.parse(searches)
     if (searches && searches.length > 0) {
       searches = searches.filter((item)=> item!== value)
     } else {
       searches = []
     }
-    const updatedSearches = [
+    updatedsearches = [
       ...searches,
       value
     ]
-    localStorage.setItem('searches', JSON.stringify(updatedSearches))
-    setPreviousSearches(updatedSearches)
+    localStorage.setItem('searches', JSON.stringify(updatedsearches))
+    setPreviousSearches(updatedsearches)
   }, [coords])
 
 
@@ -70,6 +71,11 @@ function App(props) {
       let data = await fetchOneCall(props.coords.latitude, props.coords.longitude)
       setPlace(value)
       setWeather(data)
+  }
+
+  const clearSearchHistory = ()=> {
+    localStorage.setItem('searches', JSON.stringify([]))
+    setPreviousSearches([])
   }
 
   useEffect(()=> {
@@ -95,7 +101,7 @@ function App(props) {
 
   return (
     <AppWrapper icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
-      <PlacesAutocomplete clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+      <PlacesAutocomplete clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
       { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
       { weather && value && forecasts.length ? <ForecastDays days={forecasts}  /> : ''}
     </AppWrapper>
