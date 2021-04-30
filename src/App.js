@@ -11,8 +11,7 @@ import calculateBackground from './utils/calculateBackground';
 
 const AppWrapper = styled.div`
  background: ${({icon})=> calculateBackground(icon)};
- height: 100vh;
- height: {otherHeight};
+ height: 100%;
 `
 const SmallHeaderSearch = styled.header`
 display: flex;

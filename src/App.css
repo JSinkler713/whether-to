@@ -1,8 +1,23 @@
 html {
   box-sizing: border-box;
   font-size: 16px;
+  min-height: -webkit-fill-available;
+  display:flex;
+  width: 100vw;
+  flex-direction: column;
+}
+body {
+  flex-grow: 1;
+  display: flex;
 }
 
+#root {
+  height: inherit;
+  display: flex;
+  flex-direction:column;
+  width: 100%;
+  flex-grow: 1;
+}
 *, *:before, *:after {
   box-sizing: inherit;
 }
