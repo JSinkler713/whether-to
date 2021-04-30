@@ -9,7 +9,9 @@ const calculateTime = (dt, offset) => {
     let minutes = dateString.split('T')[1].split('.')[0].split(':')[1] 
     console.log(hour)
     if (hour >= 12) {
-        hour = hour % 12
+        if (hour > 12) {
+          hour = hour % 12
+        }
         midnightMarker = 'pm'
     } else {
         if (hour === '00') {
