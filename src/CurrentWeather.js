@@ -101,7 +101,10 @@ const Temp = styled.p`
 `
 const Degree = styled.sup`
  font-size: 36px;
-
+ color: ${({active})=> (active ? '#FFFFFF' : 'hsla(0 0% 100% / 20%)')};
+`
+const Slash = styled.sup`
+ font-size: 36px;
 `
 const MainWeather = styled.p`
   align-self: flex-end;
@@ -152,11 +155,24 @@ const StatProperties = styled.div`
 `
  
 const CurrentWeather = ({weather, place})=> { 
-    let icon
-    if (weather.current) {
-        icon = weather.current.weather[0].icon
-    }
-    console.log()
+  const [celsiusTemp, setCelsiusTemp] = useState()
+  const [fahrenheitTemp, setFahrenheitTemp] = useState(Math.floor(weather.current.temp))
+  const [windSpeedImperial, setWindSpeedImperial] = useState(Math.round(weather.current.wind_speed))
+  const [windSpeedMetric, setWindSpeedMetric] = useState(Math.round(weather.current.wind_speed * 1.60934))
+  const [isMetric, setIsMetric] = useState(false)
+
+  useEffect(() => {
+    //effect
+    // (32°F − 32) × 5/9 = 0°C
+    const currentTempC = Math.round((weather.current.temp - 32) * (5/9))
+    setCelsiusTemp(currentTempC)
+    return () => {
+      //cleanup
+    };
+  }, []);
+  const changeUnits = ()=> {
+    setIsMetric(!isMetric)
+  }
     return ( 
         <CurrentWeatherWrapper icon={weather.current.weather[0].icon}>
         { weather.current ? (
@@ -170,11 +186,11 @@ const CurrentWeather = ({weather, place})=> {
           </NameTimeBlock>
 
           <IconWrapper>
-            <IconImage src={calculateIcon(icon)} />
+            <IconImage src={calculateIcon(weather.current.weather[0].icon)} />
           </IconWrapper>
 
           <TempMainBlock>
-            <Temp>{Math.floor(weather.current.temp)}<Degree>&#8457;</Degree></Temp>
+            <Temp>{ !isMetric ? fahrenheitTemp: celsiusTemp}<Degree onClick={changeUnits} active={!isMetric}>&#8457;</Degree><Slash>/</Slash><Degree onClick={changeUnits} active={isMetric}>&#8451;</Degree></Temp>
             <MainWeather>{weather.current.weather[0].main}</MainWeather>
           </TempMainBlock>
 
@@ -190,7 +206,7 @@ const CurrentWeather = ({weather, place})=> {
               <p>{weather.minutely ? weather.minutely[0].precipitation * 100 : weather.hourly[0].pop * 100}%</p>
               <p>{weather.current.humidity}%</p>
               <p>{Math.floor(weather.current.uvi)} of 10</p>
-              <p>{Math.round(weather.current.wind_speed)} mph</p>
+              <p>{!isMetric ? windSpeedImperial : windSpeedMetric} {!isMetric ? 'mph' : 'kph'}</p>
 
 
               </StatProperties>
