@@ -135,7 +135,7 @@ const InfoWrapper = styled.div`
   grid-template-columns: auto 80px;
 `
 const StatNames = styled.div`
-  padding: 10px 0px;
+  padding: 10px;
   font-family: Source Sans Pro, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -152,7 +152,6 @@ const StatProperties = styled.div`
   font-weight: 600;
   font-size: 18px;
   line-height: 21px;
-  margin-left: 1rem;
   text-align: left;
   color: #000;
 `
@@ -216,7 +215,7 @@ const CurrentWeather = ({weather, place})=> {
               <p>Wind</p>
               </StatNames>
               <StatProperties>
-              <p>{weather.minutely ? weather.minutely[0].precipitation * 100 : weather.hourly[0].pop * 100}%</p>
+              <p>{weather.minutely ? Math.floor(weather.minutely[0].precipitation * 100) : Math.floor(weather.hourly[0].pop) * 100}%</p>
               <p>{weather.current.humidity}%</p>
               <p>{Math.floor(weather.current.uvi)} of 10</p>
               <p><AnimatedNum>{springTwo && springTwo.val && springTwo.val.interpolate(val=> Math.floor(val))}</AnimatedNum> {!isMetric ? 'mph' : 'kph'}</p>
