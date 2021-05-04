@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import calculateBackground from './utils/calculateBackground'
 import calculateIcon from './utils/calculateIcon'
 import calculateTime from './utils/calculateTime'
+import {useSpring, animated, config} from 'react-spring'
 // import clear from './assets/01d.svg'
 // import cloud from './assets/03.svg'
 // import rain from './assets/09.svg'
@@ -90,7 +91,7 @@ const TempMainBlock = styled.div`
   display: flex;
   margin: 5px 26px;
 `
-const Temp = styled.p`
+const Temp = styled(animated.p)`
   font-family: Source Sans Pro, sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -98,6 +99,8 @@ const Temp = styled.p`
   line-height: 80px;
   text-align: center;
   color: #FFFFFF;
+`
+const AnimatedNum = styled(animated.span)`
 `
 const Degree = styled.sup`
  font-size: 36px;
@@ -160,6 +163,16 @@ const CurrentWeather = ({weather, place})=> {
   const [windSpeedImperial, setWindSpeedImperial] = useState(Math.round(weather.current.wind_speed))
   const [windSpeedMetric, setWindSpeedMetric] = useState(Math.round(weather.current.wind_speed * 1.60934))
   const [isMetric, setIsMetric] = useState(false)
+  const spring = useSpring({ 
+    config: {...config.slow, clamp: true},
+    val: !isMetric ? fahrenheitTemp : celsiusTemp 
+  });
+  const springTwo = useSpring({
+    config: config.slow,
+    clamp: true,
+    val: !isMetric ? windSpeedImperial : windSpeedMetric 
+  });
+  
 
   useEffect(() => {
     //effect
@@ -190,7 +203,7 @@ const CurrentWeather = ({weather, place})=> {
           </IconWrapper>
 
           <TempMainBlock>
-            <Temp>{ !isMetric ? fahrenheitTemp: celsiusTemp}<Degree onClick={changeUnits} active={!isMetric}>&#8457;</Degree><Slash>/</Slash><Degree onClick={changeUnits} active={isMetric}>&#8451;</Degree></Temp>
+            <Temp><AnimatedNum>{spring && spring.val && spring.val.interpolate(val => Math.floor(val))}</AnimatedNum><Degree onClick={changeUnits} active={!isMetric}>&#8457;</Degree><Slash>/</Slash><Degree onClick={changeUnits} active={isMetric}>&#8451;</Degree></Temp>
             <MainWeather>{weather.current.weather[0].main}</MainWeather>
           </TempMainBlock>
 
@@ -206,7 +219,7 @@ const CurrentWeather = ({weather, place})=> {
               <p>{weather.minutely ? weather.minutely[0].precipitation * 100 : weather.hourly[0].pop * 100}%</p>
               <p>{weather.current.humidity}%</p>
               <p>{Math.floor(weather.current.uvi)} of 10</p>
-              <p>{!isMetric ? windSpeedImperial : windSpeedMetric} {!isMetric ? 'mph' : 'kph'}</p>
+              <p><AnimatedNum>{springTwo && springTwo.val && springTwo.val.interpolate(val=> Math.floor(val))}</AnimatedNum> {!isMetric ? 'mph' : 'kph'}</p>
 
 
               </StatProperties>
