@@ -8,6 +8,7 @@ import CurrentWeather from './CurrentWeather';
 import ForecastDays from './ForecastDays';
 import styled from 'styled-components';
 import calculateBackground from './utils/calculateBackground';
+import {BrowserRouter as Router, Link, Switch, Route, useHistory} from 'react-router-dom'
 
 const AppWrapper = styled.div`
  background: ${({icon})=> calculateBackground(icon)};
@@ -30,8 +31,12 @@ const SmallTitle = styled.h1`
   font-size: 14px;
   line-height: 90.5%;
 `
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`
 
 function App(props) {
+  let history = useHistory()
   const [value, setValue] = useState('')
   const [otherHeight, setOtherHeight] = useState()
   const [place, setPlace] = useState('')
@@ -64,6 +69,7 @@ function App(props) {
       setPlace(value)
       setError(false)
       setWeather(data)
+      history.push('/weather')
     }
   }
 
@@ -132,22 +138,29 @@ function App(props) {
   }, [weather])
 
   return (
-    <AppWrapper otherHeight={otherHeight} icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
-      { !(weather && value) ? (
-      <PlacesAutocomplete myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
-      ): (
-      <SmallHeaderSearch>
-        <TitleWrapper style={{display: 'flex', flexDirection: 'column'}}>
-          <SmallTitle>Weather</SmallTitle><SmallTitle>Report</SmallTitle>
-        </TitleWrapper>
-      </SmallHeaderSearch>
-
-      )}
-      { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
-      { weather && value && forecasts.length ? <ForecastDays days={forecasts}  /> : ''}
-    </AppWrapper>
-  );
+      <Switch>
+        <Route exact={true} path="/">
+          <AppWrapper otherHeight={otherHeight} icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
+            <PlacesAutocomplete myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+          </AppWrapper>
+        </Route>
+        <Route path="/weather">
+          <AppWrapper otherHeight={otherHeight} icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
+            <SmallHeaderSearch>
+              <TitleWrapper style={{display: 'flex', flexDirection: 'column'}}>
+                <StyledLink to='/'>
+                  <SmallTitle>Weather</SmallTitle><SmallTitle>Report</SmallTitle>
+                </StyledLink>
+              </TitleWrapper>
+            </SmallHeaderSearch>
+            { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
+            { weather && value && forecasts.length ? <ForecastDays days={forecasts}  /> : ''}
+          </AppWrapper>
+        </Route>
+      </Switch>
+  )
 }
+
 export default geolocated({
     positionOptions: {
         enableHighAccuracy: false,
