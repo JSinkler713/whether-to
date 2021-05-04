@@ -72,9 +72,18 @@ const IconWrapper = styled.div`
   justify-content:center;
 `
 const IconImage = styled.img`
-  min-width: 50%;
+  /* Works for all mobile examples on chrome responsive tab */
+  min-width: 45%;
+  /* the iphone 5/SE super short */
+  @media screen and (max-height: 580px) {
+    /* the other min-width was making vertical scroll */
+    min-width: 30%;
+  }
+  @media screen and (max-width: 400px) {
+  min-width: none;
+  max-width: 300px;
   width: 30%;
-  /* will get large at big screen sizes */
+  }
 `
 
 const TempMainBlock = styled.div`
