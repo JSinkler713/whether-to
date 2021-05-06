@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'; 
 import calculateIcon from './utils/calculateIcon'
 import styled from 'styled-components'
-import { findByLabelText } from '@testing-library/dom';
-
+import calculateDay from './utils/calculateDay'
 
 const SingleDayWrapper = styled.div`
   display: flex;
@@ -14,9 +13,14 @@ const HighLowContainer = styled.div`
   font-family: Source Sans Pro, sans-serif;
   font-style: normal;
   font-weight: normal;
-  margin-top: 3px;
   font-size: 16px;
   line-height: 20px;
+`
+const DayOfWeek = styled.p`
+  letter-spacing: 1.1px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Source Sans Pro, sans-serif;
 `
 const Seperator = styled.span`
   line-height: 26px;
@@ -25,15 +29,16 @@ const Seperator = styled.span`
   margin: -3px 2px 0px;
 `
 const IconWrapper = styled.div`
-min-width: 60px;
-margin: 0 20px;
+min-width: 50px;
+margin: 4px 20px 5px;
 display: flex;
 align-items: center;
 `
 
-const SingleDayForecast = ({icon, high, low})=> { 
+const SingleDayForecast = ({icon, high, low, sunrise, offset})=> { 
   return ( 
     <SingleDayWrapper>
+      <DayOfWeek>{calculateDay(sunrise, offset)}</DayOfWeek>
      <IconWrapper> 
             <img src={calculateIcon(icon)} />
      </IconWrapper> 
