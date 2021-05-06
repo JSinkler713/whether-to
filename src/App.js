@@ -128,12 +128,15 @@ function App(props) {
   useEffect(()=> {
     //if weather updates, then update forecasts
     if (weather) {
+      /*
       let days =[]
       weather.daily.forEach((day, i)=> {
-        days.push(day.weather[0].icon)
+        //days.push(day.weather[0].icon)
+        days.push(day)
       })
       console.log(days)
-      setForecasts(days)
+      */
+      setForecasts(weather.daily)
     }
   }, [weather])
 
