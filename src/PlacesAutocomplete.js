@@ -15,7 +15,6 @@ import {ReactComponent as Close} from './assets/close.svg'
 import {ReactComponent as GPS} from './assets/gps.svg'
 import styled from 'styled-components'
 import "@reach/combobox/styles.css";
-const API_KEY = process.env.REACT_APP_LAT_LNG_API
 
 const InitialSearchWrapper = styled.div`
   padding-top: 50px;
@@ -130,8 +129,10 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
     // choosing use current location
     console.log('handle current location')
     if (coords) {
-      let res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&key=${API_KEY}`)
+      let res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&key=${process.env.REACT_APP_LAT_LNG_API}`)
+      console.log(res)
       res = await res.json()
+      console.log(res)
       let place = res.results[0].formatted_address.split(',')
       let city = place[1].trim()
       let stateAndZip = place[2].trim()
