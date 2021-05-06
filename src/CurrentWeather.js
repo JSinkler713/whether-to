@@ -74,7 +74,7 @@ const IconWrapper = styled.div`
 `
 const IconImage = styled.img`
   /* Works for all mobile examples on chrome responsive tab */
-  width: 40%;
+  width: 45%;
   max-width: 250px;
   /* the iphone 5/SE super short */
   @media screen and (max-height: 580px) {
@@ -84,7 +84,7 @@ const IconImage = styled.img`
   @media screen and (max-width: 400px) {
   min-width: none;
   max-width: 300px;
-  width: 30%;
+  width: 45%;
   }
 `
 
