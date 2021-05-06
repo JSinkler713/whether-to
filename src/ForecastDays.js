@@ -7,8 +7,9 @@ display: flex;
 flex-direction: row;
 overflow-x: auto;
 width: 100%;
-min-height: 130px; //little more space
-padding: 10px 0px 20px;
+min-height: 125px; //little more space
+margin-top: 5px; // adds space above forecast
+padding: 15px 10px 15px 5px; 
 `
  
 const ForecastDays = (props)=> { 

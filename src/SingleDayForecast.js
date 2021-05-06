@@ -29,7 +29,7 @@ const Seperator = styled.span`
   margin: -3px 2px 0px;
 `
 const IconWrapper = styled.div`
-min-width: 50px;
+min-width: 36px;
 margin: 4px 20px 5px;
 display: flex;
 align-items: center;

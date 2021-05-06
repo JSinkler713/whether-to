@@ -10,8 +10,10 @@ import {useSpring, animated, config} from 'react-spring'
 // import thunder from './assets/11.svg'
 
 const CurrentWeatherWrapper = styled.div`
-  height: 100%;
-  padding: 10px;
+  /*height: 100%;*/
+  /*height: 50%;*/
+  height: 50%;
+  padding: 0px 10px;
   width: 100%;
   icon: icon;
   flex-grow: 1;
@@ -74,7 +76,7 @@ const IconWrapper = styled.div`
 `
 const IconImage = styled.img`
   /* Works for all mobile examples on chrome responsive tab */
-  width: 45%;
+  width: 40%;
   max-width: 250px;
   /* the iphone 5/SE super short */
   @media screen and (max-height: 580px) {
@@ -84,7 +86,7 @@ const IconImage = styled.img`
   @media screen and (max-width: 400px) {
   min-width: none;
   max-width: 300px;
-  width: 45%;
+  width: 30%;
   }
 `
 

@@ -13,6 +13,8 @@ import {BrowserRouter as Router, Link, Switch, Route, useHistory} from 'react-ro
 const AppWrapper = styled.div`
  background: ${({icon})=> calculateBackground(icon)};
  height: 100%;
+ display: flex;
+ flex-direction: column;
 `
 const SmallHeaderSearch = styled.header`
 display: flex;
