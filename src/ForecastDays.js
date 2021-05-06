@@ -12,8 +12,8 @@ padding: 10px 0px;
 `
  
 const ForecastDays = (props)=> { 
-  const listOfForecastDays = props.days.map((icon, i)=> (
-    <SingleDayForecast icon={icon} />
+  const listOfForecastDays = props.days.map((day, i)=> (
+    <SingleDayForecast icon={day.weather.icon}  high={day.temp.max} low={day.temp.min} allInfo={day}/>
   ))
   return ( 
      <ForeCastWrapper> 
