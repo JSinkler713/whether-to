@@ -157,7 +157,7 @@ function App(props) {
               </TitleWrapper>
             </SmallHeaderSearch>
             { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
-            { weather && value && forecasts.length ? <ForecastDays days={forecasts}  /> : ''}
+            { weather && value && forecasts.length ? <ForecastDays days={forecasts} offset={weather.timezone_offset} /> : ''}
           </AppWrapper>
         </Route>
       </Switch>
