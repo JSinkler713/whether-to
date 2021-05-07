@@ -142,6 +142,12 @@ function App(props) {
     }
   }, [weather])
 
+  useEffect(()=> {
+    if (!weather) {
+      history.push('/')
+    }
+  })
+
   return (
       <Switch>
         <Route exact={true} path="/">
