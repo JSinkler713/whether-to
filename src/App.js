@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import PlacesAutocomplete from './PlacesAutocomplete';
+import MainSearchHome from './MainSearchHome';
+import SecondarySearch from './SecondarySearch';
 import { geolocated } from 'react-geolocated';
 import fetchOneCall from './utils/fetchOneCall.js'
 import CurrentWeather from './CurrentWeather';
@@ -19,6 +20,7 @@ const AppWrapper = styled.div`
 const SmallHeaderSearch = styled.header`
 display: flex;
 align-items:center;
+justify-content: space-between;
 padding: 0px 10px;
 height: 48px;
 width: 100%;
@@ -48,6 +50,7 @@ function App(props) {
   const [weather, setWeather] = useState(null)
   const [forecasts, setForecasts] = useState([])
   const [previousSearches, setPreviousSearches] = useState([])
+  const [hideSearch, setHideSearch] = useState(true)
 
   useEffect(()=> {
     setOtherHeight(window.innerHeight)
@@ -138,6 +141,7 @@ function App(props) {
       })
       console.log(days)
       */
+      //check if hidden, if not toggleClose
       setForecasts(weather.daily)
     }
   }, [weather])
@@ -146,13 +150,16 @@ function App(props) {
     if (!weather) {
       history.push('/')
     }
-  })
+    // only check on first mount for redirect on
+    // weatherreport/weather.xyz
+    // else flickers...
+  }, [])
 
   return (
       <Switch>
         <Route exact={true} path="/">
           <AppWrapper otherHeight={otherHeight} icon={weather && (weather.current !== undefined) ? weather.current.weather[0].icon : ''} className="App">
-            <PlacesAutocomplete myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+            <MainSearchHome myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
           </AppWrapper>
         </Route>
         <Route path="/weather">
@@ -163,6 +170,7 @@ function App(props) {
                   <SmallTitle>Weather</SmallTitle><SmallTitle>Report</SmallTitle>
                 </StyledLink>
               </TitleWrapper>
+              <SecondarySearch hidden={hideSearch} toggle={()=> setHideSearch(!hideSearch)} myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
             </SmallHeaderSearch>
             { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
             { weather && value && forecasts.length ? <ForecastDays days={forecasts} offset={weather.timezone_offset} /> : ''}
