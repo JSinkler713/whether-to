@@ -6,6 +6,7 @@ import calculateDay from './utils/calculateDay'
 const SingleDayWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `
 const HighLowContainer = styled.div`
   display: flex;
@@ -30,7 +31,7 @@ const Seperator = styled.span`
 `
 const IconWrapper = styled.div`
 min-width: 36px;
-margin: 4px 20px 5px;
+margin: 0px 20px;
 display: flex;
 align-items: center;
 `
