@@ -79,13 +79,14 @@ const IconImage = styled.img`
   width: min(40%, 200px);
   max-width: 250px;
   /* the iphone 5/SE super short */
-  @media screen and (max-height: 580px) {
-    /* the other min-width was making vertical scroll */
-    width: calc( 95vh - 440px );
-  }
   @media screen and (max-width: 400px) {
   min-width: none;
   width: 30%;
+  }
+  /* Switch order */
+  @media screen and (max-height: 580px) {
+    /* the other min-width was making vertical scroll */
+    width: calc( 95vh - 440px );
   }
 `
 
