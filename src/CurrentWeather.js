@@ -81,7 +81,7 @@ const IconImage = styled.img`
   /* the iphone 5/SE super short */
   @media screen and (max-height: 580px) {
     /* the other min-width was making vertical scroll */
-    min-width: 30%;
+    width: calc( 95vh - 440px );
   }
   @media screen and (max-width: 400px) {
   min-width: none;
