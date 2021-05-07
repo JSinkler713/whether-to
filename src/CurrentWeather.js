@@ -84,7 +84,7 @@ const IconImage = styled.img`
   width: 30%;
   }
   /* Switch order */
-  @media screen and (max-height: 580px) {
+  @media screen and (max-height: 600px) {
     /* the other min-width was making vertical scroll */
     width: calc( 95vh - 440px );
   }
