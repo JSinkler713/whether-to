@@ -46,7 +46,7 @@ const StyledComboBoxInput = styled(ComboboxInput)`
   font-size: 16px;
   border-radius: 18px;
   padding: 5px;
-  border: ${({error}) => (error ? `2px solid red`: `1px solid black`)};
+  border: ${({error}) => (error ? `2px solid red`: `0px solid black`)};
   background: ${({error}) => (error ? `#FFD3D3`: '#FFFFFF')};
 `
 const StyledCombobox = styled(Combobox)`
@@ -103,7 +103,7 @@ const Clear = styled.span`
 
 
 
-function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -266,4 +266,4 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
     </InitialSearchWrapper>
   );
 }
-export default PlacesAutocomplete
+export default MainSearchHome
