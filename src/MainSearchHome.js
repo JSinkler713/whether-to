@@ -16,6 +16,14 @@ import {ReactComponent as GPS} from './assets/gps.svg'
 import styled from 'styled-components'
 import "@reach/combobox/styles.css";
 
+const TitleWrapper = styled.div`
+min-height: 100px;
+width: 140px;
+display: flex;
+margin-bottom: 1rem;
+word-break: break-word;
+text-align: center;
+`
 const InitialSearchWrapper = styled.div`
   padding-top: 50px;
   display: flex;
@@ -38,14 +46,13 @@ const StyledClose = styled(Close)`
   margin: auto;
 `
 const StyledComboBoxInput = styled(ComboboxInput)`
-  width: 100%;
-  min-width: 200px;
-  min-height: 24px;
+  width: 280px;
+  height: 48px;
   /*Does this stop auto phone zoom? */
   /* YES! */
   font-size: 16px;
-  border-radius: 18px;
-  padding: 5px;
+  border-radius: 24px;
+  padding: 5px 20px;
   border: ${({error}) => (error ? `2px solid red`: `0px solid black`)};
   background: ${({error}) => (error ? `#FFD3D3`: '#FFFFFF')};
 `
@@ -212,10 +219,9 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
 
   return (
     <InitialSearchWrapper>
-      <div className='title-wrapper'>
+      <TitleWrapper>
         <h1 className="title">Weather Report</h1>
-      </div>
-      <p className="subtitle">Get the current weather and 5 day forecast</p>
+      </TitleWrapper>
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <form onSubmit={handleSubmit} style={{display: 'flex', position: 'relative'}}>
           <StyledClose onClick={handleClear}/>
@@ -224,6 +230,7 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
           </SearchButtonWrapper>
           <StyledCombobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
           <StyledComboBoxInput
+            placeholder={'Search city or postal code'}
             error={error}
             onFocus={handleFocus}
             value={value}
