@@ -139,8 +139,8 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
       let country = place[3].trim()
       let myValue = `${city}, ${stateAndZip}, ${country}`
       console.log(city, stateAndZip, country)
+      //setValue( myValue )
       setParentValue( myValue )
-      setValue('')
       console.log(res)
       getWeather(myCoords.lat, myCoords.lng)//default uses coords
     } else {
@@ -157,7 +157,7 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
         console.log('the first response, does it have address for zip?')
         console.log(res)
         console.log(res[0].formatted_address)
-        setValue('')
+        setValue(res[0].formatted_address)
         setParentValue(res[0].formatted_address)
         return getLatLng(res[0])
       })
@@ -172,8 +172,8 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
 
   const handleSelect = (val: string): void => {
     if (val !== 'Use current location') {
+      setValue(val)
       setParentValue(val, false);
-
       console.log('***********************')
       console.log(val)
       console.log('***********************')
@@ -186,7 +186,6 @@ function PlacesAutocomplete({clearSearchHistory, clearWeather, myCoords, coords,
           console.log("Latitude: ", lat)
           console.log("Longitude: ", lng)
           getWeather(lat,lng)
-          setValue('')
         })
     } else {
       handleCurrentLocation()
