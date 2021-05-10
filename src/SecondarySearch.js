@@ -236,7 +236,7 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
           <animated.span style={{
             position: 'absolute',
             right: '10px',
-            top: '9px',
+            top: '7px',
             ...squeezeShut}}>
             <StyledClose hidden={hidden} onClick={()=> {handleClear(); toggle()}}/>
           </animated.span>
