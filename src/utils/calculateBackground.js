@@ -29,7 +29,6 @@ const calculateBackground = (icon)=> {
 
         // fog and various mist same as rain for now
         '50d': `linear-gradient(180deg, #E7E6E9 0%, #C4C3C6 100%)`,
-        '50d': `linear-gradient(180deg, #7C858C 0%, #272C2F 100%)`,
     }
     // if not in the table
     if (!table[icon]) {

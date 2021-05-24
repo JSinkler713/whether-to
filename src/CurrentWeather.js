@@ -161,10 +161,11 @@ const StatProperties = styled.div`
  
 const CurrentWeather = ({weather, place})=> { 
   const [celsiusTemp, setCelsiusTemp] = useState()
-  const [fahrenheitTemp, setFahrenheitTemp] = useState(Math.floor(weather.current.temp))
-  const [windSpeedImperial, setWindSpeedImperial] = useState(Math.round(weather.current.wind_speed))
-  const [windSpeedMetric, setWindSpeedMetric] = useState(Math.round(weather.current.wind_speed * 1.60934))
+  const [fahrenheitTemp] = useState(Math.floor(weather.current.temp))
+  const [windSpeedImperial] = useState(Math.round(weather.current.wind_speed))
+  const [windSpeedMetric] = useState(Math.round(weather.current.wind_speed * 1.60934))
   const [isMetric, setIsMetric] = useState(false)
+  
   const spring = useSpring({ 
     config: {...config.slow, clamp: true},
     val: !isMetric ? fahrenheitTemp : celsiusTemp 

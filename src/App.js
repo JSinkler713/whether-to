@@ -9,7 +9,7 @@ import CurrentWeather from './CurrentWeather';
 import ForecastDays from './ForecastDays';
 import styled from 'styled-components';
 import calculateBackground from './utils/calculateBackground';
-import {BrowserRouter as Router, Link, Switch, Route, useHistory} from 'react-router-dom'
+import {Link, Switch, Route, useHistory} from 'react-router-dom'
 
 const AppWrapper = styled.div`
  background: ${({icon})=> calculateBackground(icon)};
