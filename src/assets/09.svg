@@ -1,4 +1,4 @@
-<svg width="156" height="145" viewBox="0 0 156 145" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg id="rain" width="156" height="145" viewBox="0 0 156 145" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M133.706 95.086C146.522 91.8236 156 80.2062 156 66.375C156 50.1015 142.879 36.8927 126.639 36.7512C125.106 16.1986 107.944 0 87 0C71.8169 0 58.622 8.51258 51.9276 21.0254C34.1492 21.7104 19.8974 36.1473 19.5082 54H19.1579C8.57728 54 0 62.5773 0 73.1579V76.8421C0 87.4227 8.57728 96 19.1579 96H127.842C129.887 96 131.858 95.6795 133.706 95.086Z" fill="url(#paint0_linear)"/>
 <line x1="35.5849" y1="103.863" x2="23.8629" y2="121.077" stroke="#40545F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <line x1="79.5849" y1="103.863" x2="67.8629" y2="121.077" stroke="#40545F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>

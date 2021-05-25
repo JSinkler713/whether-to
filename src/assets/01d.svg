@@ -1,4 +1,4 @@
-<svg width="126" height="126" viewBox="0 0 126 126" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg id="clear-day" width="126" height="126" viewBox="0 0 126 126" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="63" cy="63" r="63" fill="url(#paint0_radial)"/>
 <defs>
 <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(83.79 28.35) rotate(102.019) scale(99.8386)">
