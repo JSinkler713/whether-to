@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useState, useEffect, useRef } from "react";
 import usePlacesAutocomplete, {
   getLatLng, getGeocode } from "use-places-autocomplete";
 // trying this out
@@ -99,7 +99,7 @@ const Clear = styled.span`
 `
 
 
-function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCoords, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
+function SecondarySearch({clearSearchHistory, clearWeather, myCoords, coords, error, getWeather, getMyWeather, setParentCoords, setParentValue , previousSearches}) {
   const {
     ready,
     value,
@@ -107,12 +107,45 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
     setValue
   } = usePlacesAutocomplete();
 
+  const [hidden, setHidden] = useState(true)
+
+  const inputEl = useRef(null);
+  const onSearchClickOrPress = () => {
+    inputEl.current.focus();
+  };
+
   const searchSlide = useSpring({ width: hidden ? '0px' : '200px', opacity: hidden ? 0 : 1})
   const squeezeShut = useSpring({ 
     config: config.slow,
     width: hidden ? '0px' : '18px',
     opacity: hidden ? '0' : '1',
   })
+
+  const toggle = ()=> {
+    setHidden(!hidden)
+  }
+  const handlePressClose = (e)=> {
+    if (!hidden) { 
+      toggle() 
+    }
+  }
+
+  const handlePressSearch = (e)=> {
+    if (hidden) { 
+      toggle() 
+      //onSearchClickOrPress()  
+    } else { 
+      handleSubmit(e);
+    }
+  }
+  useEffect(()=> {
+    const timer = setTimeout(()=> {
+    onSearchClickOrPress()
+    }, 1000)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [toggle])
 
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -126,36 +159,25 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
 
   const handleCurrentLocation = async(e)=> {
     // choosing use current location
-    console.log('handle current location')
     if (coords) {
       let res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&key=${process.env.REACT_APP_LAT_LNG_API}`)
-      console.log(res)
       res = await res.json()
-      console.log(res)
       let place = res.results[0].formatted_address.split(',')
       let city = place[1].trim()
       let stateAndZip = place[2].trim()
       let country = place[3].trim()
       let myValue = `${city}, ${stateAndZip}, ${country}`
-      console.log(city, stateAndZip, country)
       //setValue( myValue )
       setParentValue( myValue )
-      console.log(res)
       getWeather(myCoords.lat, myCoords.lng)//default uses coords
     } else {
-      console.log('no coords yet')
     }
   }
 
   const handleSubmit = (e)=> {
     e.preventDefault()
-    console.log('in the submit')
-    console.log('going to try getGeocode')
     getGeocode({ address : value })
       .then((res)=>{
-        console.log('the first response, does it have address for zip?')
-        console.log(res)
-        console.log(res[0].formatted_address)
         setValue(res[0].formatted_address)
         setParentValue(res[0].formatted_address)
         return getLatLng(res[0])
@@ -163,8 +185,6 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
       .then(({ lat, lng }) => {
         setParentCoords({ lat, lng })
         getWeather(lat,lng)
-        console.log('this is what i got')
-        console.log('lat and long', lat, lng)
       })
     //setParentValue( value, false )
   }
@@ -173,17 +193,11 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
     if (val !== 'Use current location') {
       setValue(val)
       setParentValue(val, false);
-      console.log('***********************')
-      console.log(val)
-      console.log('***********************')
       // assuming they just chose a location
       getGeocode({ address : val })
         .then((res)=> getLatLng(res[0]))
         .then(({ lat, lng }) => {
           setParentCoords({ lat, lng })
-          console.log("The coordinates are")
-          console.log("Latitude: ", lat)
-          console.log("Longitude: ", lng)
           getWeather(lat,lng)
         })
     } else {
@@ -193,7 +207,6 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
 
   useEffect(()=> {
     if (!hidden && value) {
-      console.log('this useEffect is happening')
       const timeOutRef = setTimeout(()=> {
         setValue('')
         toggle()
@@ -223,25 +236,28 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
 
   return(
         <form onSubmit={handleSubmit} style={{display: 'flex', position: 'relative'}}>
-          <animated.span style={{
-            position: 'absolute',
-            right: '10px',
-            top: '7px',
-            ...squeezeShut}}>
-            <StyledClose hidden={hidden} onClick={()=> {handleClear(); toggle()}}/>
-          </animated.span>
-          <SearchButtonWrapper onClick={(e)=> hidden ? toggle() : handleSubmit(e)}>
+          <SearchButtonWrapper tabIndex="0" onKeyPress={handlePressSearch} onClick={(e)=> hidden ? toggle() : handleSubmit(e)}>
               <StyledSearchSVG />
           </SearchButtonWrapper>
           <animated.div style={searchSlide}>
-          <StyledCombobox onSelect={handleSelect} hidden={hidden} openOnFocus={true} aria-labelledby="demo">
+          <StyledCombobox  onSelect={handleSelect} hidden={hidden} openOnFocus={true} aria-labelledby="demo">
+            
           <StyledComboBoxInput
+            id='hello'
+            ref={inputEl}
             hidden={hidden}
             error={error}
             value={value}
             onChange={handleInput}
             disabled={!ready}
           />
+          <animated.span style={{
+            position: 'absolute',
+            right: '10px',
+            top: '7px',
+            ...squeezeShut}}>
+            <StyledClose hidden={hidden} tabIndex="0" onKeyPress={handlePressClose} onSubmit={()=> {handleClear(); toggle();}} onClick={()=> {handleClear(); toggle();}}/>
+          </animated.span>
           <TryAgainBox error={error}>
             Please Enter a valid location or postal code.
           </TryAgainBox>

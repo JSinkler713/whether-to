@@ -49,7 +49,6 @@ function App(props) {
   const [weather, setWeather] = useState(null)
   const [forecasts, setForecasts] = useState([])
   const [previousSearches, setPreviousSearches] = useState([])
-  const [hideSearch, setHideSearch] = useState(true)
 
   useEffect(()=> {
     setOtherHeight(window.innerHeight)
@@ -169,7 +168,7 @@ function App(props) {
                   <SmallTitle>Weather</SmallTitle><SmallTitle>Report</SmallTitle>
                 </StyledLink>
               </TitleWrapper>
-              <SecondarySearch hidden={hideSearch} toggle={()=> setHideSearch(!hideSearch)} myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
+              <SecondarySearch myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
             </SmallHeaderSearch>
             { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
             { weather && value && forecasts.length ? <ForecastDays days={forecasts} offset={weather.timezone_offset} /> : ''}
