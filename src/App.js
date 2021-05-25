@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import MainSearchHome from './MainSearchHome';
@@ -63,10 +62,11 @@ function App(props) {
     // when lat and lng update call our OneCallApi
   const getWeather = async(lat=coords.lat, lng=coords.lng)=> {
     let data = await fetchOneCall(lat, lng)
-    console.log(data, 'data returned it is not liking')
     if (data === undefined) {
       // do some error handling
       setWeather(null)
+      // API comes in as both string or number :(
+      //eslint-disable-next-line 
     } else if (data.cod == '400') {
       setError(true)
       setWeather(null)
@@ -80,7 +80,6 @@ function App(props) {
 
   useEffect(()=> {
     // when a user enters a search save it to lacalstorage
-    console.log('the use effect with depend on coords is running')
     setWeather(null)
     let searches = localStorage.getItem('searches')
     let updatedsearches
@@ -96,12 +95,11 @@ function App(props) {
     ]
     localStorage.setItem('searches', JSON.stringify(updatedsearches))
     setPreviousSearches(updatedsearches)
-  }, [coords])
+  }, [coords]) //eslint-disable-line react-hooks/exhaustive-deps
 
 
   const getMyWeather = async ()=> {
       // this is to use current location from Geolocated App
-      console.log('getting my own weather ', 'coords are', props.coords.latitude, props.coords.longitude)
       let data = await fetchOneCall(props.coords.latitude, props.coords.longitude)
       setPlace(value)
       setWeather(data)
@@ -115,7 +113,8 @@ function App(props) {
   useEffect(()=> {
     // if value changes, then so should place
     setPlace(value)
-  }, [getMyWeather])
+  }, [getMyWeather])//eslint-disable-line react-hooks/exhaustive-deps
+
 
   const clearWeather = ()=> {
     setWeather(null)
@@ -139,7 +138,6 @@ function App(props) {
         //days.push(day.weather[0].icon)
         days.push(day)
       })
-      console.log(days)
       */
       //check if hidden, if not toggleClose
       setForecasts(weather.daily)
@@ -153,7 +151,8 @@ function App(props) {
     // only check on first mount for redirect on
     // weatherreport/weather.xyz
     // else flickers...
-  }, [])
+  }, [])//eslint-disable-line react-hooks/exhaustive-deps
+
 
   return (
       <Switch>

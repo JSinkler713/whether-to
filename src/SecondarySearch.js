@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import usePlacesAutocomplete, {
   getLatLng, getGeocode } from "use-places-autocomplete";
 // trying this out
@@ -17,12 +17,6 @@ import styled from 'styled-components'
 import "@reach/combobox/styles.css";
 import { useSpring, animated, config } from 'react-spring';
 
-const InitialSearchWrapper = styled.div`
-  padding-top: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
 const StyledSearchSVG = styled(Search)`
   path {
     fill: white;
@@ -112,7 +106,6 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
     suggestions: { status, data },
     setValue
   } = usePlacesAutocomplete();
-  const [focused, setFocused] = useState(false)
 
   const searchSlide = useSpring({ width: hidden ? '0px' : '200px', opacity: hidden ? 0 : 1})
   const squeezeShut = useSpring({ 
@@ -127,10 +120,6 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
     // setParentValue(value) got confusing with it changing before weather fetched
   };
 
-  const handleFocus = (e)=> {
-    console.log('it is focused')
-    setFocused(true)
-  }
   const handleClear = (e)=> {
     setValue('')
   }
@@ -211,7 +200,8 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
       }, 1000)
       return ()=> clearTimeout(timeOutRef)
     }
-  },[ getWeather ])
+  },[ getWeather ]) //eslint-disable-line react-hooks/exhaustive-deps
+
 
   const renderSuggestions = (): JSX.Element => {
     const suggestions = data.map(({ place_id, description }: any) => (
@@ -248,7 +238,6 @@ function SecondarySearch({clearSearchHistory, hidden, toggle, clearWeather, myCo
           <StyledComboBoxInput
             hidden={hidden}
             error={error}
-            onFocus={handleFocus}
             value={value}
             onChange={handleInput}
             disabled={!ready}

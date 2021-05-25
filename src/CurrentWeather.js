@@ -1,13 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react'; 
+import React, {useState, useEffect} from 'react'; 
 import styled from 'styled-components'
-import calculateBackground from './utils/calculateBackground'
 import calculateIcon from './utils/calculateIcon'
 import calculateTime from './utils/calculateTime'
 import {useSpring, animated, config} from 'react-spring'
-// import clear from './assets/01d.svg'
-// import cloud from './assets/03.svg'
-// import rain from './assets/09.svg'
-// import thunder from './assets/11.svg'
 
 const CurrentWeatherWrapper = styled.div`
   /*height: 100%;*/
@@ -185,7 +180,8 @@ const CurrentWeather = ({weather, place})=> {
     return () => {
       //cleanup
     };
-  }, []);
+  }, []);//eslint-disable-line react-hooks/exhaustive-deps
+
   const changeUnits = ()=> {
     setIsMetric(!isMetric)
   }

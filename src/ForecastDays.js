@@ -1,4 +1,3 @@
-import React, {useState, useEffect, useContext} from 'react'; 
 import SingleDayForecast from './SingleDayForecast'
 import styled from 'styled-components'
 

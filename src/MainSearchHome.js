@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import usePlacesAutocomplete, {
   getLatLng, getGeocode } from "use-places-autocomplete";
 // trying this out
@@ -117,17 +117,12 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
     suggestions: { status, data },
     setValue
   } = usePlacesAutocomplete();
-  const [focused, setFocused] = useState(false)
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
     setParentValue(value)
   };
 
-  const handleFocus = (e)=> {
-    console.log('it is focused')
-    setFocused(true)
-  }
   const handleClear = (e)=> {
     setValue('')
   }
@@ -232,7 +227,6 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
           <StyledComboBoxInput
             placeholder={'Search city or postal code'}
             error={error}
-            onFocus={handleFocus}
             value={value}
             onChange={handleInput}
             disabled={!ready}

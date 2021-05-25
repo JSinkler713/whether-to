@@ -1,4 +1,3 @@
-import React, {useState, useEffect, useContext} from 'react'; 
 import calculateIcon from './utils/calculateIcon'
 import styled from 'styled-components'
 import calculateDay from './utils/calculateDay'
@@ -41,7 +40,7 @@ const SingleDayForecast = ({icon, high, low, sunrise, offset})=> {
     <SingleDayWrapper>
       <DayOfWeek>{calculateDay(sunrise, offset)}</DayOfWeek>
      <IconWrapper> 
-            <img src={calculateIcon(icon)} />
+            <img alt='weather-icon' src={calculateIcon(icon)} />
      </IconWrapper> 
      <HighLowContainer>{Math.round(high)}&#xb0; <Seperator> | </Seperator> {Math.round(low)}&#xb0;</HighLowContainer>
     </SingleDayWrapper>
