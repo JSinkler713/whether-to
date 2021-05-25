@@ -126,6 +126,18 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
   const handleClear = (e)=> {
     setValue('')
   }
+  const handleClearPress = (e)=> {
+    // if enter pressed when focused
+    if (e.charCode === 13) {
+      setValue('')
+    }
+  }
+  const handleSubmitKeyPress = (e)=> {
+    // if enter pressed when focused
+    if (e.charCode === 13) {
+      handleSubmit(e)
+    }
+  }
 
   const handleCurrentLocation = async(e)=> {
     // choosing use current location
@@ -200,8 +212,7 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
       </TitleWrapper>
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <form onSubmit={handleSubmit} style={{display: 'flex', position: 'relative'}}>
-          <StyledClose onClick={handleClear}/>
-          <SearchButtonWrapper onClick={handleSubmit}>
+          <SearchButtonWrapper tabIndex="0" aria-label='search submit button' onKeyPress={handleSubmitKeyPress} onClick={handleSubmit}>
               <StyledSearchSVG />
           </SearchButtonWrapper>
           <StyledCombobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
@@ -212,6 +223,7 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
             onChange={handleInput}
             disabled={!ready}
           />
+          <StyledClose tabIndex="0" onKeyPress={handleClearPress} onClick={handleClear}/>
           <TryAgainBox error={error}>
             Please Enter a valid location or postal code.
           </TryAgainBox>
