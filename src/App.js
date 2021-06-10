@@ -21,7 +21,7 @@ const SmallHeaderSearch = styled.header`
   align-items:center;
   justify-content: flex-start;
   padding: 0px 10px;
-  height: 48px;
+  height: 55px;
   width: 100%;
   @media (min-width: 700px) {
     justify-content: center;
