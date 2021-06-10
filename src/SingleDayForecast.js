@@ -6,6 +6,10 @@ const SingleDayWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (min-width: 700px) {
+  min-width: calc(700px / 8);
+  max-width: 125px;
+  }
 `
 const HighLowContainer = styled.div`
   display: flex;
@@ -15,12 +19,20 @@ const HighLowContainer = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
+  @media (min-width: 700px) {
+    font-size: 24px;
+    line-height: 20px;
+  }
 `
 const DayOfWeek = styled.p`
   letter-spacing: 1.1px;
   font-size: 16px;
   font-weight: 600;
   font-family: Source Sans Pro, sans-serif;
+  @media (min-width: 700px) {
+    font-size: 24px;
+    line-height: 20px;
+  }
 `
 const Seperator = styled.span`
   line-height: 26px;
@@ -29,10 +41,13 @@ const Seperator = styled.span`
   margin: -3px 2px 0px;
 `
 const IconWrapper = styled.div`
-min-width: 36px;
-margin: 0px 20px;
-display: flex;
-align-items: center;
+  min-width: 36px;
+  margin: 0px 20px;
+  display: flex;
+  align-items: center;
+  @media (min-width: 700px) {
+    margin: 15px;
+  }
 `
 
 const SingleDayForecast = ({icon, high, low, sunrise, offset})=> { 
