@@ -17,6 +17,16 @@ import styled from 'styled-components'
 import "@reach/combobox/styles.css";
 import { useSpring, animated, config } from 'react-spring';
 
+const StyledForm = styled.form`
+  display: flex;
+  position: absolute;
+  top: 13px;
+  right: 20px;
+  @media (min-width: 700px) {
+    top: 30px;
+    right: 20px;
+  }
+`
 const StyledSearchSVG = styled(Search)`
   path {
     fill: white;
@@ -84,7 +94,7 @@ const RecentLocationLabel = styled.span`
   top: 4px;
   margin-top: auto;
   margin-bottom: auto;
-  font-size:14px;
+  font-size: 14px;
   left: 5px;
   font-weight: 800;
 `
@@ -235,7 +245,7 @@ function SecondarySearch({clearSearchHistory, clearWeather, myCoords, coords, er
   };
 
   return(
-    <form onSubmit={handleSubmit} style={{display: 'flex', position: 'absolute', top: '30px', right: '20px'}}>
+    <StyledForm onSubmit={handleSubmit}>
           <SearchButtonWrapper tabIndex="0" onKeyPress={handlePressSearch} onClick={(e)=> hidden ? toggle() : handleSubmit(e)}>
               <StyledSearchSVG />
           </SearchButtonWrapper>
@@ -290,7 +300,7 @@ function SecondarySearch({clearSearchHistory, clearWeather, myCoords, coords, er
           </ComboboxPopover>
         </StyledCombobox>
         </animated.div>
-        </form>
+        </StyledForm>
   )
 }
 
