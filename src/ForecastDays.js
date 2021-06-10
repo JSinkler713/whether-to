@@ -9,6 +9,10 @@ width: 100%;
 min-height: 100px; //little more space
 margin-top: 12px; // adds space above forecast
 padding: 0px 10px 15px 5px; 
+@media (min-width: 700px) {
+  justify-content: space-around;
+  min-height: 150px;
+}
 `
  
 const ForecastDays = (props)=> { 
