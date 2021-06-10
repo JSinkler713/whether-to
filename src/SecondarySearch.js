@@ -235,7 +235,7 @@ function SecondarySearch({clearSearchHistory, clearWeather, myCoords, coords, er
   };
 
   return(
-        <form onSubmit={handleSubmit} style={{display: 'flex', position: 'relative'}}>
+    <form onSubmit={handleSubmit} style={{display: 'flex', position: 'absolute', top: '30px', right: '20px'}}>
           <SearchButtonWrapper tabIndex="0" onKeyPress={handlePressSearch} onClick={(e)=> hidden ? toggle() : handleSubmit(e)}>
               <StyledSearchSVG />
           </SearchButtonWrapper>
