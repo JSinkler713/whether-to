@@ -17,13 +17,23 @@ const AppWrapper = styled.div`
  flex-direction: column;
 `
 const SmallHeaderSearch = styled.header`
-display: flex;
-align-items:center;
-justify-content: space-between;
-padding: 0px 10px;
-height: 48px;
-width: 100%;
-
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
+  padding: 0px 10px;
+  height: 48px;
+  width: 100%;
+  @media (min-width: 700px) {
+    justify-content: center;
+    height: 84px;
+     div {
+       a {
+        h1 {
+          font-size: 36px;
+        }
+      }
+    }
+  }
 `
 const TitleWrapper = styled.div`
   text-align: center;
@@ -168,8 +178,8 @@ function App(props) {
                   <SmallTitle>Weather</SmallTitle><SmallTitle>Report</SmallTitle>
                 </StyledLink>
               </TitleWrapper>
-              <SecondarySearch myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
             </SmallHeaderSearch>
+              <SecondarySearch myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
             { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
             { weather && value && forecasts.length ? <ForecastDays days={forecasts} offset={weather.timezone_offset} /> : ''}
           </AppWrapper>
