@@ -10,6 +10,7 @@ const CurrentWeatherWrapper = styled.div`
   height: 50%;
   padding: 0px 10px;
   width: 100%;
+  max-width: 800px;
   icon: icon;
   flex-grow: 1;
 `
@@ -18,22 +19,40 @@ const CurrentWeatherBlock = styled.div`
   flex-grow:1;
   flex-direction: column;
   height: 100%;
-
+  @media (min-width: 700px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows:  75px auto;
+    grid-template-areas: 
+    "title title"
+    "icon degree"
+    "icon infoblock"
+  }
 `
 
 const NameTimeBlock = styled.div`
   display: flex;
-  justify-content: flex;
+  @media (min-width: 700px) {
+    grid-area: title;
+    justify-content: center;
+  }
+
 `
 const NameTimeWrapper = styled.div`
   padding: 11px 16px;
   margin-left: -10px;
   color: black;
-  width: 230px;
+  width: 260px;
   background: #FFFFFF;
   border-radius: 0px 4px 74px 0px;
   display: grid;
   grid-template-columns: 1fr;
+  @media (min-width: 700px) {
+    width: 400px;
+    grid-area: title;
+    justify-content: center;
+    border-radius: 4px 4px 4px 4px;
+  }
 `
 const CityName = styled.p`
   word-break: break-word;
@@ -68,6 +87,10 @@ const IconWrapper = styled.div`
   display: flex;
   align-items:center;
   justify-content:center;
+  @media (min-width: 700px) {
+    grid-area: icon;
+    justify-content: center;
+  }
 `
 const IconImage = styled.img`
   /* Works for all mobile examples on chrome responsive tab */
@@ -88,8 +111,13 @@ const IconImage = styled.img`
 const TempMainBlock = styled.div`
   display: flex;
   margin: 5px 26px;
+  @media (min-width: 700px) {
+    grid-area: degree;
+    display: flex;
+    align-items: center;
+  }
 `
-const Temp = styled(animated.p)`
+const Temp = styled(animated.div)`
   font-family: Source Sans Pro, sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -97,6 +125,10 @@ const Temp = styled(animated.p)`
   line-height: 80px;
   text-align: center;
   color: #FFFFFF;
+  @media (min-width: 700px) {
+    align-items: center;
+    display: flex;
+  }
 `
 const AnimatedNum = styled(animated.span)`
 `
@@ -117,20 +149,36 @@ const MainWeather = styled.p`
   line-height: 30px;
   letter-spacing: 0.03em;
   color: #FFFFFF;
+  @media (min-width: 700px) {
+    align-self: center;
+    margin-bottom: -28px;
+    padding: 0px 10px;
+  }
 `
 
 const InfoBlock = styled.div`
   display: flex;
   justify-content: flex-end;
+  @media (min-width: 700px) {
+    grid-area: infoblock;
+    justify-content: flex-start;
+    margin: 26px;
+  }
 `
 const InfoWrapper = styled.div`
   margin-right: -10px;
   color: black;
-  width: 230px;
+  width: 240px;
   border-radius: 4px 0px 0px 128px;
   background: #FFF; 
   display: grid;
   grid-template-columns: auto 80px;
+  @media (min-width: 700px) {
+    grid-template-columns: 3fr 2fr;
+    width: 240px;
+    height: 120px;
+    border-radius: 4px;
+  }
 `
 const StatNames = styled.div`
   padding: 10px;
@@ -142,6 +190,10 @@ const StatNames = styled.div`
   /* identical to box height */
   text-align: right;
   color: #6A6A6A;
+  @media (min-width: 700px) {
+    text-align: left;
+
+  }
 `
 const StatProperties = styled.div`
   padding: 10px 0px;
