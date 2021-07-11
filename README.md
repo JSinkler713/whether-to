@@ -17,4 +17,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
 ### Live site
-The live production site can be found at (Weather Report)[https://www.weatherreport.xyz] .
+The live production site can be found at [Weather Report](https://www.weatherreport.xyz).
