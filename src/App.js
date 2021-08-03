@@ -39,7 +39,7 @@ const TitleWrapper = styled.div`
   text-align: center;
 `
 const SmallTitle = styled.h1`
-  font-family: 'Staatliches', cursive;
+  font-family: 'Staatliches';
   color: white;
   font-size: 14px;
   line-height: 90.5%;
