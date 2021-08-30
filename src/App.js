@@ -4,6 +4,7 @@ import MainSearchHome from './MainSearchHome';
 import SecondarySearch from './SecondarySearch';
 import { geolocated } from 'react-geolocated';
 import fetchOneCall from './utils/fetchOneCall.js'
+import fetchAQI from './utils/fetchAQI.js'
 import CurrentWeather from './CurrentWeather';
 import ForecastDays from './ForecastDays';
 import styled from 'styled-components';
@@ -70,6 +71,8 @@ function App(props) {
 
     // when lat and lng update call our OneCallApi
   const getWeather = async(lat=coords.lat, lng=coords.lng)=> {
+    //fetch AQI and log for now
+    fetchAQI(lat, lng)
     let data = await fetchOneCall(lat, lng)
     if (data === undefined) {
       // do some error handling
