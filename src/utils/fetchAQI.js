@@ -5,7 +5,8 @@ async function fetchAQI(lat, lng) {
   let seLng = lng + spaceAroundFactor
   let seLat = lat - spaceAroundFactor
 
-  let url=`https://api.purpleair.com/v1/sensors?nwlng=${nwLng}&nwlat=${nwLat}&selng=${seLng}&selat=${seLat}&fields=pm2.5_10minute,name`
+  // outdoor sensors, .1 lat and lng around place coordinates
+  let url=`https://api.purpleair.com/v1/sensors?nwlng=${nwLng}&nwlat=${nwLat}&selng=${seLng}&selat=${seLat}&location_type=0&fields=pm2.5_10minute,name,`
 
   let data = await fetch(url, {
     headers: {
@@ -15,9 +16,17 @@ async function fetchAQI(lat, lng) {
 
   })
   data = await data.json()
+  // data = [sensorID, PM2.5, name]
+  const reducer = (accumulator, currentArr) => accumulator + currentArr[1]
+
+  let sum = data.data.reduce(reducer, 0)
+  let avg = Math.round(sum / data.data.length);
   // get avg
   console.log('***********************')
   console.log(data)
+  console.log('SUM :', sum)
+  console.log('AVG :', avg)
   console.log('***********************')
+  return avg
 }
 export default fetchAQI
