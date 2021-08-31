@@ -205,8 +205,15 @@ const StatProperties = styled.div`
   text-align: left;
   color: #000;
 `
+
+const AQIDescription = styled.span`
+  font-size: 14px;
+  font-shadow: 1px black;
+  color: ${({aqiColor})=> aqiColor};
+  font-weight: 800;
+`
  
-const CurrentWeather = ({weather, place})=> { 
+const CurrentWeather = ({weather, place, aqi})=> { 
   const [celsiusTemp, setCelsiusTemp] = useState()
   const [fahrenheitTemp] = useState(Math.floor(weather.current.temp))
   const [windSpeedImperial] = useState(Math.round(weather.current.wind_speed))
@@ -265,12 +272,26 @@ const CurrentWeather = ({weather, place})=> {
               <p>Humidity</p>
               <p>UV Index</p>
               <p>Wind</p>
+              {aqi[1] === 'n' ?
+                (<></>)
+              :
+              (
+              <p>AQI</p>
+              )
+              }
               </StatNames>
               <StatProperties>
               <p>{weather.minutely ? Math.floor(weather.minutely[0].precipitation * 100) : Math.floor(weather.hourly[0].pop) * 100}%</p>
               <p>{weather.current.humidity}%</p>
               <p>{Math.floor(weather.current.uvi)} of 10</p>
               <p><AnimatedNum>{springTwo && springTwo.val && springTwo.val.interpolate(val=> Math.floor(val))}</AnimatedNum> {!isMetric ? 'mph' : 'kph'}</p>
+              {aqi[1] === 'n' ?
+                (<></>)
+              :
+              (
+              <p>{aqi[0]} <AQIDescription aqiColor={aqi[2]}>{aqi[1]}</AQIDescription></p>
+              )
+              }
 
 
               </StatProperties>
