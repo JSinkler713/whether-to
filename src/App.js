@@ -27,15 +27,16 @@ const SmallHeaderSearch = styled.header`
   @media (min-width: 700px) {
     justify-content: center;
     height: 84px;
-     div {
-       a {
+    div {
+      a {
         h1 {
-          font-size: 36px;
+         font-size: 36px;
         }
       }
     }
   }
 `
+
 const TitleWrapper = styled.div`
   text-align: center;
 `
@@ -60,6 +61,7 @@ function App(props) {
   const [weather, setWeather] = useState(null)
   const [forecasts, setForecasts] = useState([])
   const [previousSearches, setPreviousSearches] = useState([])
+  const [AQI, setAQI] = useState('')
 
   useEffect(()=> {
     setOtherHeight(window.innerHeight)
@@ -71,9 +73,11 @@ function App(props) {
 
     // when lat and lng update call our OneCallApi
   const getWeather = async(lat=coords.lat, lng=coords.lng)=> {
-    //fetch AQI and log for now
-    fetchAQI(lat, lng)
     let data = await fetchOneCall(lat, lng)
+    //fetch AQI and log for now
+    let avgPM25 = await fetchAQI(lat, lng)
+    setAQI(avgPM25)
+    
     if (data === undefined) {
       // do some error handling
       setWeather(null)
@@ -183,7 +187,7 @@ function App(props) {
               </TitleWrapper>
             </SmallHeaderSearch>
               <SecondarySearch myCoords={myCoords} clearSearchHistory={clearSearchHistory} clearWeather={clearWeather} error={error} getMyWeather={getMyWeather} getWeather={getWeather} coords={props.coords} setParentValue={setValue} setParentCoords={setCoords} previousSearches={previousSearches}/>
-            { weather && value ? <CurrentWeather place={place} weather={weather} /> : ''}
+            { weather && value ? <CurrentWeather aqi={AQI} place={place} weather={weather} /> : ''}
             { weather && value && forecasts.length ? <ForecastDays days={forecasts} offset={weather.timezone_offset} /> : ''}
           </AppWrapper>
         </Route>
