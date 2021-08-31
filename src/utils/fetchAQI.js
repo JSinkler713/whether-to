@@ -1,3 +1,21 @@
+const colors = [`rgb(60, 130, 24)`, `rgb(117, 112, 34)`, `rgb(226, 137, 70)`, `rgb(216, 69, 51)`, `rgb(128,38, 74)`, `rgb(105, 29, 39)`]
+
+const ranges = [ [0, 49], [50, 99], [100, 149], [150, 199], [200, 299], [300, 1000]]
+
+const descriptions = [ 'good', 'ok', 'poor', 'bad', 'very bad', 'worst']
+
+function getDescColor(aqi) {
+  for (let i=0; i< ranges.length; i++) {
+    if(aqi >= ranges[i][0] && aqi < ranges[i][1]) {
+      return [descriptions[i], colors[i]]
+    }
+  }
+  return 'no sensor data'
+}
+
+console.log(getDescColor(38))
+
+
 async function fetchAQI(lat, lng) {
   let spaceAroundFactor = .1
   let nwLng = lng - spaceAroundFactor
@@ -26,7 +44,9 @@ async function fetchAQI(lat, lng) {
   console.log(data)
   console.log('SUM :', sum)
   console.log('AVG :', avg)
+  const [description, color] = getDescColor(avg)
+  console.log('description: ', description, 'color: ', color)
   console.log('***********************')
-  return avg
+  return [avg, description, color]
 }
 export default fetchAQI
