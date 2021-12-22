@@ -258,7 +258,7 @@ function SecondarySearch({clearSearchHistory, clearWeather, myCoords, coords, er
             hidden={hidden}
             error={error}
             value={value}
-            autocomplet={false}
+            autocomplete={false}
             onChange={handleInput}
             disabled={!ready}
           />
