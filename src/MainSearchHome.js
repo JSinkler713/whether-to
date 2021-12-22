@@ -218,6 +218,7 @@ function MainSearchHome({clearSearchHistory, clearWeather, myCoords, coords, err
           <StyledCombobox onSelect={handleSelect} openOnFocus={true} aria-labelledby="demo">
           <StyledComboBoxInput
             placeholder={'Search city or postal code'}
+            autocomplete={false}
             error={error}
             value={value}
             onChange={handleInput}
