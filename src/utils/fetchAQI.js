@@ -34,8 +34,8 @@ async function fetchAQI(lat, lng) {
 
   })
   data = await data.json()
-  // data = [sensorID, PM2.5, name]
-  const reducer = (accumulator, currentArr) => accumulator + currentArr[1]
+  // switched now data = [sensorId, name, PM2.5]
+  const reducer = (accumulator, currentArr) => accumulator + currentArr[2]
 
   let sum = data.data.reduce(reducer, 0)
   let avg = Math.round(sum / data.data.length);
